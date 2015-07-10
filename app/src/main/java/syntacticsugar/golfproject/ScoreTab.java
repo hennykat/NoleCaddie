@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 
 /**
- * Created by Dalton on 7/6/2015.
+ * Created by Dalton on 7/10/2015.
  */
 public class ScoreTab extends Activity {
     @Override
