@@ -29,6 +29,7 @@ public class Splash extends Activity {
             }
         }, 2000);
 
+        
     }//end onCreate
 
 }//end class
