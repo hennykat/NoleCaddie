@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">GolfProject</string>
+
+    <string name="action_settings">Settings</string>
+
+
+    <string-array name="holes">
+        <item>Hole 1</item>
+        <item>Hole 2</item>
+        <item>Hole 3</item>
+        <item>Hole 4</item>
+        <item>Hole 5</item>
+        <item>Hole 6</item>
+        <item>Hole 7</item>
+        <item>Hole 8</item>
+        <item>Hole 9</item>
+    </string-array>
+
+</resources>
