@@ -20,7 +20,6 @@ public class Splash extends Activity {
         setContentView(R.layout.splash);
 
         //pause for a moment
-
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -29,18 +28,6 @@ public class Splash extends Activity {
                 Splash.this.finish();
             }
         }, 2000);
-
-        new Timer().schedule(
-                new TimerTask() {
-                    @Override
-                    public void run() {
-                        //setContentView(R.layout.menu);
-                    }
-                }, 3000
-        ); //end timer
-
-
-
 
     }//end onCreate
 
