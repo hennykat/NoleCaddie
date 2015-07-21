@@ -10,11 +10,15 @@
     <uses-feature android:glEsVersion="0x00020000" android:required="true"/>
     <uses-library android:name="com.google.android.maps"/>
 
+    <uses-amzn-sdk android:minSdkVersion="2"
+
+                   android:targetSdkVersion="3" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme">
 
         <uses-library
             android:name="com.google.android.maps" />
@@ -29,7 +33,9 @@
 
         <activity
             android:name="syntacticsugar.golfproject.TabBar"
-            android:label="@string/app_name" >
+            android:label="@string/app_name"
+            >
+
         </activity>
 
         <activity android:name=".MenuScreen"></activity>
