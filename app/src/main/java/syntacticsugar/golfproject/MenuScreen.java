@@ -20,7 +20,8 @@ import java.net.URL;
 
 /**
  * Created by Dalton on 7/6/2015.
- * Edited by Sam on 7/16/2015
+ * Edited by Sam on 7/16/2015.
+ * Edited by Blake 7/21/2015
  */
 public class MenuScreen extends Activity {
 
@@ -35,26 +36,9 @@ public class MenuScreen extends Activity {
 
         GetWeather myGetWeather = new GetWeather();
         myGetWeather.execute();
-        weatherType(myGetWeather.getWeather());
 
     }//end onCreate
 
-    // set weather type screen on main menu
-    public void weatherType(int weather ) {
-
-        switch(weather){
-            case 0:  // sunny
-                mRelativeLayout.setBackgroundResource(R.drawable.screensunny);
-                break;
-            case 1:  // rainy
-                mRelativeLayout.setBackgroundResource(R.drawable.screenrain);
-                break;
-            case 2:default:  // partly cloudy
-                mRelativeLayout.setBackgroundResource(R.drawable.screenpartly);
-                break;
-        }
-
-    }
 
     public void startGame(View view) {
        /*
@@ -80,7 +64,7 @@ public class MenuScreen extends Activity {
 
             try{
                 //url conforms to OpenWeather api call for zipcode 32405, zip for FSU-PC
-                URL url = new URL("http://api.openweathermap.org/data/2.5/weather?zip=98105,us");
+                URL url = new URL("http://api.openweathermap.org/data/2.5/weather?zip=32405,us");
 
                 //Open request to OpenWeather
                 urlConnection = (HttpURLConnection) url.openConnection();
@@ -144,14 +128,17 @@ public class MenuScreen extends Activity {
 
         }
 
+        // set weather type screen on main menu
         @Override
         protected void onPostExecute(Integer integer) {
             super.onPostExecute(integer);
+            if (integer != null){
 
             Integer skyType = new Integer("2");
 
             if (integer == 800) skyType = 0; //sunny clear skys
-            else if ((integer >= 200) || (integer <= 531)) skyType = 1; // rainy
+            else if ( integer <= 531) skyType = 1; // rainy
+                Log.v("SkyType", skyType + "");
             switch(skyType){
                 case 0:  // sunny
                     mRelativeLayout.setBackgroundResource(R.drawable.screensunny);
@@ -163,16 +150,9 @@ public class MenuScreen extends Activity {
                     mRelativeLayout.setBackgroundResource(R.drawable.screenpartly);
                     break;
             }
+            }
         }
 
-        public int getWeather(){
-            int skyType = 2;
-
-            if (skyCondition == 800) skyType = 0; //sunny clear skys
-            else if ((skyCondition >= 200) || (skyCondition <= 531)) skyType = 1; // rainy
-
-            return skyType;
-        }
 
     }
 
