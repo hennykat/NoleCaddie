@@ -46,7 +46,7 @@ public class MainTab extends FragmentActivity implements OnMapReadyCallback {
 
 
 
-    public static int currentStroke = 1;
+    public static int currentStroke = 0;
     public static int currentHole = 1;
     public static String currentPar;
 
@@ -112,7 +112,7 @@ public class MainTab extends FragmentActivity implements OnMapReadyCallback {
         googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
         googleMap.addMarker(new MarkerOptions()
                 .position(Hole)
-                .title("Hole "+currentHole));
+                .title("Hole "+currentHole)).showInfoWindow();
         googleMap.setMyLocationEnabled(true);
     }
 }//end class
