@@ -1,16 +1,17 @@
 package syntacticsugar.golfproject;
 
-import static syntacticsugar.golfproject.Constants.FIRST_COLUMN;
-import static syntacticsugar.golfproject.Constants.SECOND_COLUMN;
-import static syntacticsugar.golfproject.Constants.THIRD_COLUMN;
-
-import java.util.ArrayList;
-import java.util.HashMap;
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ListView;
-import android.content.Intent;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+
+import static syntacticsugar.golfproject.Constants.FIRST_COLUMN;
+import static syntacticsugar.golfproject.Constants.SECOND_COLUMN;
+import static syntacticsugar.golfproject.Constants.THIRD_COLUMN;
 
 /**
  * Created by Dalton on 7/10/2015.
@@ -53,7 +54,7 @@ public class ScoreTab extends Activity {
     public void nextHole(View view) {
 
         if(++MainTab.currentHole == 19) MainTab.currentHole = 1;
-        MainTab.currentStroke = 1;
+        MainTab.currentStroke = 0;
         Intent intent = new Intent(this,MainTab.class);
         startActivity(intent);
     }
