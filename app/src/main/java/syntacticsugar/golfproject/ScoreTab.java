@@ -54,7 +54,7 @@ public class ScoreTab extends Activity {
     public void nextHole(View view) {
 
         if(++MainTab.currentHole == 19) MainTab.currentHole = 1;
-        MainTab.currentStroke = 0;
+        MainTab.currentStroke = 1;
         Intent intent = new Intent(this,MainTab.class);
         startActivity(intent);
     }
