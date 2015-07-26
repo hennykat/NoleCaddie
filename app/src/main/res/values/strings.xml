@@ -2,7 +2,8 @@
     <string name="app_name">Nole Caddie</string>
 
     <string name="action_settings">Settings</string>
-
+    <string name="feet">feet</string>
+    <string name="blank">--</string>
 
     <string-array name="holes">
         <item>Hole 1</item>
