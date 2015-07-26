@@ -18,10 +18,10 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginLeft="10dp">
-                <ImageView android:layout_width="wrap_content" android:layout_height="wrap_content" android:background="@drawable/titlehole" android:layout_weight="1"></ImageView>
-                <ImageView android:layout_width="wrap_content" android:layout_height="wrap_content" android:background="@drawable/titlepar" android:layout_weight="1"></ImageView>
-                <ImageView android:layout_width="wrap_content" android:layout_height="wrap_content" android:background="@drawable/titlescore" android:layout_weight="1"></ImageView>
+            android:padding="5dp">
+                <ImageView android:layout_width="0dp" android:layout_height="wrap_content" android:background="@drawable/titlehole" android:layout_weight=".3"></ImageView>
+                <ImageView android:layout_width="0dp" android:layout_height="wrap_content" android:background="@drawable/titlepar" android:layout_weight=".3"></ImageView>
+                <ImageView android:layout_width="0dp" android:layout_height="wrap_content" android:background="@drawable/titlestroke" android:layout_weight=".4"></ImageView>
         </LinearLayout>
 
         <LinearLayout

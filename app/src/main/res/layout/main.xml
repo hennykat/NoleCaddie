@@ -1,65 +1,129 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/screengarnett">
-
-
-
-    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:map="http://schemas.android.com/apk/res-auto"
-        android:name="com.google.android.gms.maps.SupportMapFragment"
-        android:id="@+id/map"
-        android:layout_centerHorizontal="true"
-        android:layout_marginLeft="30dp"
-        android:layout_width="fill_parent"
-        android:layout_height="400dp"
-        android:layout_marginTop="95dp"
-        />
-
-    <Button
-        android:id="@+id/throwButton"
-        android:layout_width="wrap_content"
-        android:layout_height="60dp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="5dp"
-        android:padding="20dp"
-        android:background="@drawable/buttonthrow"
-        android:onClick="markStroke"/>
+    android:background="@drawable/screengarnett"
+    android:weightSum="1">
 
     <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:orientation="horizontal"
         android:layout_width="fill_parent"
-        android:layout_height="75dp">
+        android:layout_height="0dp"
+        android:layout_weight=".125"
+        android:id="@+id/linLayout"
+        android:weightSum="1">
 
-        <Button
-            android:id="@+id/menuButton"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="5dp"
-            android:layout_width="150dp"
-            android:layout_height="50dp"
-            android:layout_gravity="center"
-            android:background="@drawable/buttonmenu"
+        <ImageView
+            android:id="@+id/stroketitle"
+            android:layout_width="0dp"
+            android:layout_weight=".2"
+            android:layout_height="fill_parent"
+            android:layout_gravity="left"
+            android:background="@drawable/titlestroke"
             android:onClick="gotoMenu"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight=".15"
+            android:layout_height="fill_parent"
+            android:gravity="center_horizontal"
+            android:id="@+id/strokecount"
+            android:text="@string/blank"
+            android:textSize="40sp"
+            android:textStyle="bold"
+            android:textColor="#ffffffff" />
+
+        <ImageView
+            android:id="@+id/strokes"
+            android:layout_width="0dp"
+            android:layout_weight=".2"
+            android:layout_height="fill_parent"
+            android:gravity="center"
+            android:background="@drawable/titlehole"
+            android:onClick="gotoMenu"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight=".15"
+            android:layout_height="fill_parent"
+            android:gravity="center_horizontal"
+            android:id="@+id/holeNumber"
+            android:text="@string/blank"
+            android:textSize="40sp"
+            android:textStyle="bold"
+            android:textColor="#ffffffff" />
 
         <Button
             android:id="@+id/nextButton"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="5dp"
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:layout_gravity="center"
+            android:layout_width="0dp"
+            android:layout_weight=".3"
+            android:layout_height="fill_parent"
+            android:layout_gravity="right"
             android:background="@drawable/buttonfinishhole"
             android:onClick="finishHole"/>
+
+
     </LinearLayout>
 
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight=".125"
+        android:layout_below="@id/linLayout"
+        android:id="@+id/linLayout2"
+        android:weightSum="1">
 
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_weight=".3"
+            android:layout_height="fill_parent"
+            android:background="@drawable/distance"/>
 
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight=".45"
+            android:layout_height="fill_parent"
+            android:layout_gravity="bottom"
+            android:gravity="right"
+            android:id="@+id/distanceText"
+            android:text="@string/blank"
+            android:textSize="40sp"
+            android:textStyle="bold"
+            android:textColor="#ffffffff" />
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight=".25"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:gravity="center"
+            android:id="@+id/meters"
+            android:text="@string/feet"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#ffffffff" />
 
-</RelativeLayout>
+        </LinearLayout>
+
+    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:map="http://schemas.android.com/apk/res-auto"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:id="@+id/map"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight=".6"
+        android:layout_below="@id/linLayout2"/>
+
+    <Button
+        android:id="@+id/throwButton"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight=".15"
+        android:background="@drawable/buttonthrow"
+        android:onClick="markStroke"/>
+
+</LinearLayout>
