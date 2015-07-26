@@ -7,7 +7,6 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.View;
@@ -223,7 +222,7 @@ public class MainTab extends FragmentActivity implements OnMapReadyCallback, Goo
     }
 
     public void finishHole(View view) {
-        Intent intent = new Intent(this,ScoreTab.class);
+        Intent intent = new Intent(this,EditScore.class);
         startActivity(intent);
     }
 

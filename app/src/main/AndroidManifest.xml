@@ -46,12 +46,13 @@
         <activity android:name=".ScoreTab"
                   android:screenOrientation="portrait"
                   android:configChanges="keyboardHidden|orientation|screenSize"/>
+        <activity android:name=".EditScore"
+            android:screenOrientation="portrait"
+            android:configChanges="keyboardHidden|orientation|screenSize"/>
 
 
         <meta-data android:name="com.google.android.maps.v2.API_KEY"
                    android:value="AIzaSyC96MEk_b5UPVHJV5ZvUklQHgAJn_qKJKk"/>
-
-
 
 
     </application>

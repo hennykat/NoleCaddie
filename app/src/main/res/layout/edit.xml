@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/screengold">
+<ImageView
+    android:id="@+id/editstrokes"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:background="@drawable/buttonscore"
+    />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:id="@+id/edit"
+        android:text="@string/editmessage"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="#ffffffff" />
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="1"
+        android:layout_marginTop="50dp"
+        >
+
+    <Button
+        android:id="@+id/downButton"
+        android:layout_width="0dp"
+        android:layout_weight=".3"
+        android:layout_height="wrap_content"
+        android:text="-"
+        android:onClick="downScore"
+        android:background="#ff6666"
+        android:textColor="#ffffffff"
+        android:textSize="40sp" />
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_weight=".4"
+        android:layout_height="50dp"
+        android:gravity="center_horizontal"
+        android:id="@+id/editStrokesText"
+        android:text="@string/blank"
+        android:textSize="40sp"
+        android:textStyle="bold"
+        android:textColor="#ffffffff" />
+
+    <Button
+        android:id="@+id/upButton"
+        android:layout_width="0dp"
+        android:layout_weight=".3"
+        android:layout_height="wrap_content"
+        android:text="+"
+        android:onClick="upScore"
+        android:background="#33cc33"
+        android:textColor="#ffffffff"
+        android:textSize="40sp" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/savebutton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:layout_marginTop="50dp"
+        android:background="@drawable/buttonfinishhole"
+        android:onClick="finishHole"/>
+
+</LinearLayout>

@@ -4,6 +4,7 @@
     <string name="action_settings">Settings</string>
     <string name="feet">feet</string>
     <string name="blank">--</string>
+    <string name="editmessage">Adjust your strokes if you need to, otherwise click finish hole to mark your strokes</string>
 
     <string-array name="holes">
         <item>Hole 1</item>
