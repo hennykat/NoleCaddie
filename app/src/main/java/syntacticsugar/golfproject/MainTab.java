@@ -180,6 +180,8 @@ public class MainTab extends FragmentActivity implements OnMapReadyCallback, Goo
         if (mCurrentLocation != null) {
             myLocationListener.onLocationChanged(mCurrentLocation);
         } else {
+            Toast.makeText(getApplicationContext(), "No Location Available. Probably turned off.",
+                Toast.LENGTH_SHORT).show();
             //Intent intent =  new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
             //startActivity(intent);
         }
