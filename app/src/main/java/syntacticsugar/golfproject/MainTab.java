@@ -180,8 +180,8 @@ public class MainTab extends FragmentActivity implements OnMapReadyCallback, Goo
         if (mCurrentLocation != null) {
             myLocationListener.onLocationChanged(mCurrentLocation);
         } else {
-            Intent intent =  new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-            startActivity(intent);
+            //Intent intent =  new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+            //startActivity(intent);
         }
 
 
