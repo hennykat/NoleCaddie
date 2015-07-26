@@ -68,7 +68,6 @@ public class MainTab extends FragmentActivity implements OnMapReadyCallback, Goo
     public static String currentPar;
     SupportMapFragment mapFragment;
     LocationManager locationManager;
-    LocationListener myLocationListener;
     Location mCurrentLocation;
     Location hCurrentLocation;
     Criteria criteria;
@@ -109,14 +108,50 @@ public class MainTab extends FragmentActivity implements OnMapReadyCallback, Goo
         bestProvider = locationManager.getBestProvider(criteria, true);
 
         mCurrentLocation = locationManager.getLastKnownLocation(bestProvider);
-        myLocationListener = new LocationListener() {
-            @Override
-            public void onLocationChanged(Location location) {
 
-                currentHoleLatLng = holeLocations[currentHole- 1];
-                myCurrentLat = mCurrentLocation.getLatitude();
-                myCurrentLng = mCurrentLocation.getLongitude();
-                currentLocation = new LatLng(myCurrentLat, myCurrentLng);
+
+        if (mCurrentLocation != null) {
+            myLocationListener.onLocationChanged(mCurrentLocation);
+        } else {
+            Toast.makeText(getApplicationContext(), "No Location Available. Probably turned off.",
+                Toast.LENGTH_SHORT).show();
+            //Intent intent =  new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+            //startActivity(intent);
+        }
+
+        //locationManager.requestLocationUpdates(bestProvider,20000,1,myLocationListener);
+
+    }//end onCreate
+
+    private final LocationListener myLocationListener = new LocationListener() {
+        @Override
+        public void onLocationChanged(Location location) {
+            updateCurrentLocation(location);
+        }
+
+        @Override
+        public void onStatusChanged(String provider, int status, Bundle extras) {
+
+        }
+
+        @Override
+        public void onProviderEnabled(String provider) {
+
+        }
+
+        @Override
+        public void onProviderDisabled(String provider) {
+
+        }
+    };
+
+    private void updateCurrentLocation(Location location){
+
+        if(location!= null) {
+            currentHoleLatLng = holeLocations[currentHole - 1];
+            myCurrentLat = mCurrentLocation.getLatitude();
+            myCurrentLng = mCurrentLocation.getLongitude();
+            currentLocation = new LatLng(myCurrentLat, myCurrentLng);
 
 
     /*   // **** works; no time to make a good graphic so taking out for now
@@ -130,65 +165,36 @@ public class MainTab extends FragmentActivity implements OnMapReadyCallback, Goo
                 .transparency(0.8f)); */
 
 
-                hCurrentLocation = new Location("");
-                hCurrentLocation.setLatitude(currentHoleLatLng.latitude);
-                hCurrentLocation.setLongitude(currentHoleLatLng.longitude);
+            hCurrentLocation = new Location("");
+            hCurrentLocation.setLatitude(currentHoleLatLng.latitude);
+            hCurrentLocation.setLongitude(currentHoleLatLng.longitude);
 
-                CameraPosition cameraPosition = new CameraPosition.Builder()
-                        .target(currentHoleLatLng)      // Sets the center of the map to Mountain View
-                        .zoom(18)                   // Sets the zoom
-                        .bearing(mCurrentLocation.bearingTo(hCurrentLocation))                // Sets the orientation of the camera to east
-                        .tilt(65.0f)                   // Sets the tilt of the camera to 30 degrees
-                        .build();                   // Creates a CameraPosition from the builder
+            CameraPosition cameraPosition = new CameraPosition.Builder()
+                    .target(currentHoleLatLng)      // Sets the center of the map to Mountain View
+                    .zoom(18)                   // Sets the zoom
+                    .bearing(mCurrentLocation.bearingTo(hCurrentLocation))                // Sets the orientation of the camera to east
+                    .tilt(65.0f)                   // Sets the tilt of the camera to 30 degrees
+                    .build();                   // Creates a CameraPosition from the builder
 
-                googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+            googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
 
-                googleMap.addMarker(new MarkerOptions()
-                        .position(currentHoleLatLng)
-                        .title("Hole " + currentHole)
-                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.basketmarker)));
+            googleMap.addMarker(new MarkerOptions()
+                    .position(currentHoleLatLng)
+                    .title("Hole " + currentHole)
+                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.basketmarker)));
 
-                googleMap
-                        .addPolyline((new PolylineOptions())
-                                .add(currentLocation, currentHoleLatLng).width(5).color(0xFF7A2339)
-                                .geodesic(true));
+            googleMap
+                    .addPolyline((new PolylineOptions())
+                            .add(currentLocation, currentHoleLatLng).width(5).color(0xFF7A2339)
+                            .geodesic(true));
 
-                distanceToHole = CalculationByDistance(currentLocation, currentHoleLatLng);
+            distanceToHole = CalculationByDistance(currentLocation, currentHoleLatLng);
 
-                distanceText.setText(String.valueOf(distanceToHole));
-
-            }
-
-            @Override
-            public void onStatusChanged(String provider, int status, Bundle extras) {
-
-            }
-
-            @Override
-            public void onProviderEnabled(String provider) {
-
-            }
-
-            @Override
-            public void onProviderDisabled(String provider) {
-
-            }
-        };
-
-
-        if (mCurrentLocation != null) {
-            myLocationListener.onLocationChanged(mCurrentLocation);
+            distanceText.setText(String.valueOf(distanceToHole));
         } else {
-            Toast.makeText(getApplicationContext(), "No Location Available. Probably turned off.",
-                Toast.LENGTH_SHORT).show();
-            //Intent intent =  new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-            //startActivity(intent);
+            Toast.makeText(getBaseContext(), "No Location Found", Toast.LENGTH_SHORT).show();
         }
-
-
-        locationManager.requestLocationUpdates(bestProvider,20000,1,myLocationListener);
-
-    }//end onCreate
+    }
 
     @Override
     protected void onResume() {
@@ -208,6 +214,7 @@ public class MainTab extends FragmentActivity implements OnMapReadyCallback, Goo
                 Toast.LENGTH_SHORT).show();
         ++currentStroke;
         strokeText.setText(String.valueOf(currentStroke));
+        locationManager.requestSingleUpdate(criteria,myLocationListener,null);
 
     }
 
