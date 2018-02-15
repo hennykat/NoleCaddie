@@ -12,7 +12,7 @@ import syntacticsugar.nolecaddie.R;
  * Created by sam on 7/26/15.
  * Updated by henny 2018
  */
-public class EditScore extends Activity{
+public class EditScore extends Activity {
 
     TextView strokeText;
 
@@ -20,12 +20,12 @@ public class EditScore extends Activity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.edit);
 
-        strokeText = (TextView) findViewById(R.id.editStrokesText);
+        strokeText = findViewById(R.id.editStrokesText);
         strokeText.setText(String.valueOf(MainTab.currentStroke));
     }
 
     public void finishHole(View view) {
-        Intent intent = new Intent(this,ScoreTab.class);
+        Intent intent = new Intent(this, ScoreTab.class);
         startActivity(intent);
     }
 

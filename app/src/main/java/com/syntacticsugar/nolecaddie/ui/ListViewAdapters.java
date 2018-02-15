@@ -1,10 +1,5 @@
 package com.syntacticsugar.nolecaddie.ui;
 
-/**
- * Created by sam on 7/17/15.
- * Updated by Henny 2018
- */
-
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -21,17 +16,23 @@ import static com.syntacticsugar.nolecaddie.model.Constants.FIRST_COLUMN;
 import static com.syntacticsugar.nolecaddie.model.Constants.SECOND_COLUMN;
 import static com.syntacticsugar.nolecaddie.model.Constants.THIRD_COLUMN;
 
-public class ListViewAdapters extends BaseAdapter{
+/**
+ * Created by sam on 7/17/15.
+ * Updated by henny 2018
+ */
+public class ListViewAdapters extends BaseAdapter {
 
     public ArrayList<HashMap<String, String>> list;
-    Activity activity;
-    TextView txtFirst;
-    TextView txtSecond;
-    TextView txtThird;
-    public ListViewAdapters(Activity activity,ArrayList<HashMap<String, String>> list){
+
+    private Activity activity;
+    private TextView txtFirst;
+    private TextView txtSecond;
+    private TextView txtThird;
+
+    public ListViewAdapters(Activity activity, ArrayList<HashMap<String, String>> list) {
         super();
-        this.activity=activity;
-        this.list=list;
+        this.activity = activity;
+        this.list = list;
     }
 
     @Override
@@ -52,27 +53,23 @@ public class ListViewAdapters extends BaseAdapter{
         return 0;
     }
 
-
-
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         // TODO Auto-generated method stub
 
 
+        LayoutInflater inflater = activity.getLayoutInflater();
 
-        LayoutInflater inflater=activity.getLayoutInflater();
+        if (convertView == null) {
 
-        if(convertView == null){
+            convertView = inflater.inflate(R.layout.scores_layout, null);
 
-            convertView=inflater.inflate(R.layout.scores_layout, null);
-
-            txtFirst=(TextView) convertView.findViewById(R.id.hole);
-            txtSecond=(TextView) convertView.findViewById(R.id.par);
-            txtThird=(TextView) convertView.findViewById(R.id.score);
-
+            txtFirst = convertView.findViewById(R.id.hole);
+            txtSecond = convertView.findViewById(R.id.par);
+            txtThird = convertView.findViewById(R.id.score);
         }
 
-        HashMap<String, String> map=list.get(position);
+        HashMap<String, String> map = list.get(position);
         txtFirst.setText(map.get(FIRST_COLUMN));
         txtSecond.setText(map.get(SECOND_COLUMN));
         txtThird.setText(map.get(THIRD_COLUMN));

@@ -11,7 +11,7 @@ import syntacticsugar.nolecaddie.R;
  * Created by Dalton on 7/10/2015.
  * Updated by henny 2018
  */
-public class Splash extends Activity {
+public class SplashActivity extends Activity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -22,7 +22,7 @@ public class Splash extends Activity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent mainIntent = new Intent(Splash.this, MenuScreen.class);
+                Intent mainIntent = new Intent(SplashActivity.this, MenuActivity.class);
                 startActivity(mainIntent);
                 finish();
             }

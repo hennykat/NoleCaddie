@@ -6,10 +6,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ListView;
 
-import com.syntacticsugar.nolecaddie.ui.ListViewAdapters;
-import com.syntacticsugar.nolecaddie.ui.MainTab;
-import com.syntacticsugar.nolecaddie.ui.MenuScreen;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -26,7 +22,7 @@ import static com.syntacticsugar.nolecaddie.model.Constants.THIRD_COLUMN;
  */
 public class ScoreTab extends Activity {
 
-    public static ArrayList<HashMap<String, String>> list = new ArrayList<HashMap<String,String>>();
+    public static ArrayList<HashMap<String, String>> list = new ArrayList<HashMap<String, String>>();
     ListViewAdapters adapter;
 
     @Override
@@ -35,42 +31,40 @@ public class ScoreTab extends Activity {
         setContentView(R.layout.score);
 
 
-    // fill up listview
-        ListView listView=(ListView)findViewById(R.id.listView1);
-        adapter=new ListViewAdapters(this, list);
+        // fill up listview
+        ListView listView = findViewById(R.id.listView1);
+        adapter = new ListViewAdapters(this, list);
         listView.setAdapter(adapter);
     }//end onCreate
 
-    public void scoreInsert(String holeNum, String parNum, String userScore){
+    public void scoreInsert(String holeNum, String parNum, String userScore) {
 
-        HashMap<String,String> temp1=new HashMap<String, String>();
+        HashMap<String, String> temp1 = new HashMap<String, String>();
         temp1.put(FIRST_COLUMN, holeNum);
         temp1.put(SECOND_COLUMN, parNum);
         temp1.put(THIRD_COLUMN, userScore);
         list.add(temp1);
-
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-            scoreInsert(Integer.toString(MainTab.currentHole),MainTab.currentPar,Integer.toString(MainTab.currentStroke));
-            adapter.notifyDataSetChanged();
+        scoreInsert(Integer.toString(MainTab.currentHole), MainTab.currentPar, Integer.toString(MainTab.currentStroke));
+        adapter.notifyDataSetChanged();
     }
 
     public void nextHole(View view) {
 
-        if(++MainTab.currentHole == 19) MainTab.currentHole = 1;
+        if (++MainTab.currentHole == 19) MainTab.currentHole = 1;
         MainTab.currentStroke = 1;
-        Intent intent = new Intent(this,MainTab.class);
+        Intent intent = new Intent(this, MainTab.class);
         startActivity(intent);
     }
 
     public void gotoMenu(View view) {
 
-        Intent intent = new Intent(this,MenuScreen.class);
+        Intent intent = new Intent(this, MenuActivity.class);
         startActivity(intent);
     }
 
-
-}//end class
+}

@@ -14,7 +14,7 @@ import syntacticsugar.nolecaddie.R;
  */
 public class TabBar extends TabActivity implements TabHost.OnTabChangeListener {
 
-    TabHost tabHost;
+    private TabHost tabHost;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -50,28 +50,24 @@ public class TabBar extends TabActivity implements TabHost.OnTabChangeListener {
     @Override
     public void onTabChanged(String tabId) {
 
-        /************ Called when tab changed *************/
+        // called when tab changed
 
-        //********* Check current selected tab and change according images *******/
+        // Check current selected tab and change according images
 
-        for(int i=0;i<tabHost.getTabWidget().getChildCount();i++)
-        {
-            if (i==0) {
+        for (int i = 0; i < tabHost.getTabWidget().getChildCount(); i++) {
+            if (i == 0) {
                 tabHost.getTabWidget().getChildAt(i);
-            }
-            else if (i==1) {
+            } else if (i == 1) {
                 tabHost.getTabWidget().getChildAt(i);
             }
         }//end for
 
-
         Log.i("tabs", "CurrentTab: " + tabHost.getCurrentTab());
 
-        if(tabHost.getCurrentTab()==0) {
+        if (tabHost.getCurrentTab() == 0) {
+            tabHost.getTabWidget().getChildAt(tabHost.getCurrentTab());
+        } else if (tabHost.getCurrentTab() == 1) {
             tabHost.getTabWidget().getChildAt(tabHost.getCurrentTab());
         }
-        else if(tabHost.getCurrentTab()==1) {
-            tabHost.getTabWidget().getChildAt(tabHost.getCurrentTab());
-        }
-    }//end onTabChanged
-}//end class
+    }
+}

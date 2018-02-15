@@ -26,9 +26,9 @@ import syntacticsugar.nolecaddie.R;
  * Edited by Blake 7/21/2015.
  * Updated by henny 2018
  */
-public class MenuScreen extends Activity {
+public class MenuActivity extends Activity {
 
-    RelativeLayout mRelativeLayout;
+    private RelativeLayout mRelativeLayout;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -44,7 +44,7 @@ public class MenuScreen extends Activity {
 
 
     public void startGame(View view) {
-        Intent mainIntent = new Intent(MenuScreen.this, MainTab.class);
+        Intent mainIntent = new Intent(MenuActivity.this, MainTab.class);
         startActivity(mainIntent);
         finish();
 

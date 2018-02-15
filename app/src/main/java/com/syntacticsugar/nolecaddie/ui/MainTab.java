@@ -7,6 +7,7 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.View;
@@ -36,50 +37,50 @@ import syntacticsugar.nolecaddie.R;
  * Updated by henny 2018
  */
 public class MainTab extends FragmentActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks,
-        GoogleApiClient.OnConnectionFailedListener{
+        GoogleApiClient.OnConnectionFailedListener {
 
-    int[] parArray = {2,3,3,3,3,3,3,2,4,3,3,2,3,3,2,2,2,2};
+    int[] parArray = {2, 3, 3, 3, 3, 3, 3, 2, 4, 3, 3, 2, 3, 3, 2, 2, 2, 2};
 
     protected static final LatLng[] holeLocations = new LatLng[]{
-            new LatLng(30.190003,-85.724264), //hole 1
-            new LatLng(30.189567,-85.724789), //hole 2
-            new LatLng(30.189336,-85.724953), //hole 3
-            new LatLng(30.188992,-85.725439), //hole 4
-            new LatLng(30.189200,-85.725322), //hole 5
-            new LatLng(30.189086,-85.725586), //hole 6
-            new LatLng(30.189483,-85.725283), //hole 7
-            new LatLng(30.189558,-85.724944), //hole 8
-            new LatLng(30.190283,-85.724247), //hole 9
-            new LatLng(30.190758,-85.723369), //hole 10
-            new LatLng(30.190142,-85.722667), //hole 11
-            new LatLng(30.190375,-85.721986), //hole 12
-            new LatLng(30.191125,-85.721831), //hole 13
-            new LatLng(30.191375,-85.722125), //hole 14
-            new LatLng(30.191053,-85.722194), //hole 15
-            new LatLng(30.191025,-85.722619), //hole 16
-            new LatLng(30.190789,-85.723086), //hole 17
-            new LatLng(30.190328,-85.723506)  //hole 18
+            new LatLng(30.190003, -85.724264), //hole 1
+            new LatLng(30.189567, -85.724789), //hole 2
+            new LatLng(30.189336, -85.724953), //hole 3
+            new LatLng(30.188992, -85.725439), //hole 4
+            new LatLng(30.189200, -85.725322), //hole 5
+            new LatLng(30.189086, -85.725586), //hole 6
+            new LatLng(30.189483, -85.725283), //hole 7
+            new LatLng(30.189558, -85.724944), //hole 8
+            new LatLng(30.190283, -85.724247), //hole 9
+            new LatLng(30.190758, -85.723369), //hole 10
+            new LatLng(30.190142, -85.722667), //hole 11
+            new LatLng(30.190375, -85.721986), //hole 12
+            new LatLng(30.191125, -85.721831), //hole 13
+            new LatLng(30.191375, -85.722125), //hole 14
+            new LatLng(30.191053, -85.722194), //hole 15
+            new LatLng(30.191025, -85.722619), //hole 16
+            new LatLng(30.190789, -85.723086), //hole 17
+            new LatLng(30.190328, -85.723506)  //hole 18
     };
 
     public static final String TAG = MainTab.class.getSimpleName();
     private final static int CONNECTION_FAILURE_RESOLUTION_REQUEST = 9000;
 
-    LatLng currentLocation;
-    GoogleMap googleMap;
+    private LatLng currentLocation;
+    private GoogleMap googleMap;
     public static int currentStroke = 1;
     public static int currentHole = 1;
     public static String currentPar;
-    SupportMapFragment mapFragment;
-    LocationManager locationManager;
-    Location mCurrentLocation;
-    Location hCurrentLocation;
-    Criteria criteria;
-    String bestProvider;
-    LatLng currentHoleLatLng;
+    private SupportMapFragment mapFragment;
+    private LocationManager locationManager;
+    private Location mCurrentLocation;
+    private Location hCurrentLocation;
+    private Criteria criteria;
+    private String bestProvider;
+    private LatLng currentHoleLatLng;
     double myCurrentLat;
     double myCurrentLng;
     double distanceToHole;
-    TextView strokeText,distanceText,holeText;
+    private TextView strokeText, distanceText, holeText;
 
 /*  // map overlay stuff
     LatLng mapSWCorner = new LatLng(30.190333,-85.724764);
@@ -92,9 +93,9 @@ public class MainTab extends FragmentActivity implements OnMapReadyCallback, Goo
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
-        distanceText = (TextView) findViewById(R.id.distanceText);
-        holeText = (TextView) findViewById(R.id.holeNumber);
-        strokeText = (TextView) findViewById(R.id.strokecount);
+        distanceText = findViewById(R.id.distanceText);
+        holeText = findViewById(R.id.holeNumber);
+        strokeText = findViewById(R.id.strokecount);
         holeText.setText(String.valueOf(currentHole));
         strokeText.setText(String.valueOf(currentStroke));
 
@@ -117,7 +118,7 @@ public class MainTab extends FragmentActivity implements OnMapReadyCallback, Goo
             myLocationListener.onLocationChanged(mCurrentLocation);
         } else {
             Toast.makeText(getApplicationContext(), "No Location Available. Probably turned off.",
-                Toast.LENGTH_SHORT).show();
+                    Toast.LENGTH_SHORT).show();
             //Intent intent =  new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
             //startActivity(intent);
         }
@@ -148,9 +149,9 @@ public class MainTab extends FragmentActivity implements OnMapReadyCallback, Goo
         }
     };
 
-    private void updateCurrentLocation(Location location){
+    private void updateCurrentLocation(Location location) {
 
-        if(location!= null) {
+        if (location != null) {
             currentHoleLatLng = holeLocations[currentHole - 1];
             myCurrentLat = mCurrentLocation.getLatitude();
             myCurrentLng = mCurrentLocation.getLongitude();
@@ -202,6 +203,7 @@ public class MainTab extends FragmentActivity implements OnMapReadyCallback, Goo
     @Override
     protected void onResume() {
         super.onResume();
+
         currentPar = checkPar(currentHole);
     }
 
@@ -222,17 +224,16 @@ public class MainTab extends FragmentActivity implements OnMapReadyCallback, Goo
     }
 
     public String checkPar(int hole) {
-        String par = Integer.toString(parArray[(hole-1)]);
-        return par;
+        return Integer.toString(parArray[(hole - 1)]);
     }
 
     public void gotoMenu(View view) {
-        Intent intent = new Intent(this,MenuScreen.class);
+        Intent intent = new Intent(this, MenuActivity.class);
         startActivity(intent);
     }
 
     public void finishHole(View view) {
-        Intent intent = new Intent(this,EditScore.class);
+        Intent intent = new Intent(this, EditScore.class);
         startActivity(intent);
     }
 
@@ -268,13 +269,13 @@ public class MainTab extends FragmentActivity implements OnMapReadyCallback, Goo
         //https://developers.google.com/maps/documentation/android/views#target_location
         googleMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
         Log.v("MapReady Hole is: ", " " + currentHole);
-        LatLng Hole = holeLocations[currentHole- 1];
+        LatLng Hole = holeLocations[currentHole - 1];
     }
 
     @Override
     public void onConnected(Bundle bundle) {
         Log.i(TAG, "Location services connected.");
-    //locationManager.requestLocationUpdates(bestProvider,20000,1,null);
+        //locationManager.requestLocationUpdates(bestProvider,20000,1,null);
     }
 
     @Override
@@ -283,7 +284,8 @@ public class MainTab extends FragmentActivity implements OnMapReadyCallback, Goo
     }
 
     @Override
-    public void onConnectionFailed(ConnectionResult connectionResult) {
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+
         if (connectionResult.hasResolution()) {
             try {
                 // Start an Activity that tries to resolve the error
@@ -306,4 +308,4 @@ public class MainTab extends FragmentActivity implements OnMapReadyCallback, Goo
         }
     }
 
-}//end class
+}
