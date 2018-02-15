@@ -28,14 +28,14 @@ import syntacticsugar.nolecaddie.R;
  */
 public class MenuActivity extends Activity {
 
-    private RelativeLayout mRelativeLayout;
+    private RelativeLayout menuLayout;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.menu);
+        setContentView(R.layout.activity_menu);
 
-        mRelativeLayout = findViewById(R.id.mRelativeLayout);
+        menuLayout = findViewById(R.id.menu_layout);
 
         GetWeather myGetWeather = new GetWeather();
         myGetWeather.execute();
@@ -47,7 +47,6 @@ public class MenuActivity extends Activity {
         Intent mainIntent = new Intent(MenuActivity.this, MainTab.class);
         startActivity(mainIntent);
         finish();
-
     }
 
     public class GetWeather extends AsyncTask<Void, Void, Integer> {
@@ -120,7 +119,7 @@ public class MenuActivity extends Activity {
             return skyCondition;
         }
 
-        // set weather type screen on main menu
+        // set weather type screen on activity_main activity_menu
         @Override
         protected void onPostExecute(Integer integer) {
             super.onPostExecute(integer);
@@ -128,13 +127,13 @@ public class MenuActivity extends Activity {
             if (integer != null) {
                 switch (integer) {
                     case 800:  // sunny
-                        mRelativeLayout.setBackgroundResource(R.drawable.screensunny);
+                        menuLayout.setBackgroundResource(R.drawable.screensunny);
                         break;
                     case 531:  // rainy
-                        mRelativeLayout.setBackgroundResource(R.drawable.screenrain);
+                        menuLayout.setBackgroundResource(R.drawable.screenrain);
                         break;
                     default:  // partly cloudy
-                        mRelativeLayout.setBackgroundResource(R.drawable.screenpartly);
+                        menuLayout.setBackgroundResource(R.drawable.screenpartly);
                         break;
                 }
             }

@@ -91,7 +91,7 @@ public class MainTab extends FragmentActivity implements OnMapReadyCallback, Goo
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main);
+        setContentView(R.layout.activity_main);
 
         distanceText = findViewById(R.id.distanceText);
         holeText = findViewById(R.id.holeNumber);
