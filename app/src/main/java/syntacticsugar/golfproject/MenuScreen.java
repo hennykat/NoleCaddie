@@ -33,7 +33,7 @@ public class MenuScreen extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.menu);
 
-        mRelativeLayout = (RelativeLayout) findViewById(R.id.mRelativeLayout);
+        mRelativeLayout = findViewById(R.id.mRelativeLayout);
 
         GetWeather myGetWeather = new GetWeather();
         myGetWeather.execute();
@@ -42,18 +42,15 @@ public class MenuScreen extends Activity {
 
 
     public void startGame(View view) {
-       /*
-        Intent intent = new Intent(this,MainTab.class);
-        startActivity(intent);
-        */
-
         Intent mainIntent = new Intent(MenuScreen.this, MainTab.class);
-        MenuScreen.this.startActivity(mainIntent);
-        MenuScreen.this.finish();
+        startActivity(mainIntent);
+        finish();
 
     }
+
     public class GetWeather extends AsyncTask<Void, Void, Integer> {
-        private final String LOG_TAG = GetWeather.class.getSimpleName();
+
+        private final String TAG = GetWeather.class.getSimpleName();
         private int skyCondition;
 
         @Override
@@ -63,7 +60,7 @@ public class MenuScreen extends Activity {
             BufferedReader reader = null;
             String weatherData = null;
 
-            try{
+            try {
                 //url conforms to OpenWeather api call for zipcode 32405, zip for FSU-PC
                 // TODO: abstract app id
                 URL url = new URL("http://api.openweathermap.org/data/2.5/weather?zip=32405,us&APPID=5a448d218d027a8293c6f74cc606c4eb");
@@ -75,8 +72,8 @@ public class MenuScreen extends Activity {
 
                 //Receive JSON data
                 InputStream inputStream = urlConnection.getInputStream();
-                StringBuffer buffer = new StringBuffer();
-                if (inputStream == null){
+                StringBuilder builder = new StringBuilder();
+                if (inputStream == null) {
                     //Didn't receive anything
                     return null;
                 }
@@ -84,35 +81,27 @@ public class MenuScreen extends Activity {
 
                 String line;
                 while ((line = reader.readLine()) != null) {
-                    // Since it's JSON, adding a newline isn't necessary (it won't affect parsing)
-                    // But  makes debugging easier if you print out the completed
-                    // buffer for debugging.
-                    buffer.append(line + "\n");
+                    builder.append(line);
+                    builder.append("\n");
                 }
-                if (buffer.length() == 0) {
+                if (builder.length() == 0) {
                     // Stream was empty.  No point in parsing.
                     return null;
                 }
-                weatherData = buffer.toString();
+                weatherData = builder.toString();
 
                 try {
                     JSONObject jsonObject = new JSONObject(weatherData);
                     skyCondition = jsonObject.getJSONArray("weather").getJSONObject(0).getInt("id");
-                    //Double windSpeed = jsonObject.getJSONObject("wind").getDouble("speed");
-                    // Integer windDirection = jsonObject.getJSONObject("wind").getInt("deg");
                     Log.v("JSONTry", "Sky Condition: " + skyCondition);
-                    // Log.v("JSONTry", windSpeed.toString());
-                    // Log.v("JSONTry", windDirection.toString());
-                    // Log.v(LOG_TAG, "Forecast is" + weatherData);
-                }catch (JSONException e){
-                    Log.e("JSON error","couldnt resolve data",e);
+                } catch (JSONException e) {
+                    Log.e("JSON error", "couldnt resolve data", e);
                 }
 
-
             } catch (IOException e) {
-                Log.e(LOG_TAG, "Error ", e);
+                Log.e(TAG, "Error ", e);
 
-            }finally{
+            } finally {
 
                 //close connection
                 if (urlConnection != null) {
@@ -122,41 +111,32 @@ public class MenuScreen extends Activity {
                     try {
                         reader.close();
                     } catch (final IOException e) {
-                        Log.e(LOG_TAG, "Error closing stream", e);
+                        Log.e(TAG, "Error closing stream", e);
                     }
                 }
             }
             return skyCondition;
-
         }
 
         // set weather type screen on main menu
         @Override
         protected void onPostExecute(Integer integer) {
             super.onPostExecute(integer);
-            if (integer != null){
 
-            Integer skyType = new Integer("2");
-
-            if (integer == 800) skyType = 0; //sunny clear skys
-            else if ( integer <= 531) skyType = 1; // rainy
-                Log.v("SkyType", skyType + "");
-            switch(skyType){
-                case 0:  // sunny
-                    mRelativeLayout.setBackgroundResource(R.drawable.screensunny);
-                    break;
-                case 1:  // rainy
-                    mRelativeLayout.setBackgroundResource(R.drawable.screenrain);
-                    break;
-                case 2:default:  // partly cloudy
-                    mRelativeLayout.setBackgroundResource(R.drawable.screenpartly);
-                    break;
-            }
+            if (integer != null) {
+                switch (integer) {
+                    case 800:  // sunny
+                        mRelativeLayout.setBackgroundResource(R.drawable.screensunny);
+                        break;
+                    case 531:  // rainy
+                        mRelativeLayout.setBackgroundResource(R.drawable.screenrain);
+                        break;
+                    default:  // partly cloudy
+                        mRelativeLayout.setBackgroundResource(R.drawable.screenpartly);
+                        break;
+                }
             }
         }
-
-
     }
 
-
-}//end class
+}
