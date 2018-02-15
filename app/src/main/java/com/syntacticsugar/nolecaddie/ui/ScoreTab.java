@@ -6,14 +6,14 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ListView;
 
+import com.syntacticsugar.nolecaddie.R;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import syntacticsugar.nolecaddie.R;
-
-import static com.syntacticsugar.nolecaddie.model.Constants.FIRST_COLUMN;
-import static com.syntacticsugar.nolecaddie.model.Constants.SECOND_COLUMN;
-import static com.syntacticsugar.nolecaddie.model.Constants.THIRD_COLUMN;
+import static com.syntacticsugar.nolecaddie.model.AppConfig.FIRST_COLUMN;
+import static com.syntacticsugar.nolecaddie.model.AppConfig.SECOND_COLUMN;
+import static com.syntacticsugar.nolecaddie.model.AppConfig.THIRD_COLUMN;
 
 /**
  * Created by Dalton on 7/10/2015.

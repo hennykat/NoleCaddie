@@ -5,7 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 
-import syntacticsugar.nolecaddie.R;
+import com.syntacticsugar.nolecaddie.R;
 
 /**
  * Created by Dalton on 7/10/2015.

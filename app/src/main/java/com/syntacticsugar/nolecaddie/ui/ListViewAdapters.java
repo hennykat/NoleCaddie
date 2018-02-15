@@ -10,11 +10,11 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import syntacticsugar.nolecaddie.R;
+import com.syntacticsugar.nolecaddie.R;
 
-import static com.syntacticsugar.nolecaddie.model.Constants.FIRST_COLUMN;
-import static com.syntacticsugar.nolecaddie.model.Constants.SECOND_COLUMN;
-import static com.syntacticsugar.nolecaddie.model.Constants.THIRD_COLUMN;
+import static com.syntacticsugar.nolecaddie.model.AppConfig.FIRST_COLUMN;
+import static com.syntacticsugar.nolecaddie.model.AppConfig.SECOND_COLUMN;
+import static com.syntacticsugar.nolecaddie.model.AppConfig.THIRD_COLUMN;
 
 /**
  * Created by sam on 7/17/15.

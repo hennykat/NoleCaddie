@@ -2,23 +2,23 @@ package com.syntacticsugar.nolecaddie.ui;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.RelativeLayout;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+import com.syntacticsugar.nolecaddie.R;
+import com.syntacticsugar.nolecaddie.model.AppConfig;
+
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
-
-import syntacticsugar.nolecaddie.R;
 
 /**
  * Created by Dalton on 7/6/2015.
@@ -28,20 +28,15 @@ import syntacticsugar.nolecaddie.R;
  */
 public class MenuActivity extends Activity {
 
-    private RelativeLayout menuLayout;
+    public static final String TAG = MenuActivity.class.getSimpleName();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
 
-        menuLayout = findViewById(R.id.menu_layout);
-
-        GetWeather myGetWeather = new GetWeather();
-        myGetWeather.execute();
-
-    }//end onCreate
-
+        getWeather();
+    }
 
     public void startGame(View view) {
         Intent mainIntent = new Intent(MenuActivity.this, MainTab.class);
@@ -49,94 +44,87 @@ public class MenuActivity extends Activity {
         finish();
     }
 
-    public class GetWeather extends AsyncTask<Void, Void, Integer> {
+    private void getWeather() {
 
-        private final String TAG = GetWeather.class.getSimpleName();
-        private int skyCondition;
+        // setup queue
+        RequestQueue queue = Volley.newRequestQueue(this);
+        final String appId = getResources().getString(R.string.weather_id);
+        final String url = AppConfig.WEATHER_URL + appId;
 
-        @Override
-        protected Integer doInBackground(Void... params) {
-            //API call setup
-            HttpURLConnection urlConnection = null;
-            BufferedReader reader = null;
-            String weatherData = null;
+        // request json
+        JsonObjectRequest weatherRequest = new JsonObjectRequest
+                (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
 
-            try {
-                //url conforms to OpenWeather api call for zipcode 32405, zip for FSU-PC
-                // TODO: abstract app id
-                URL url = new URL("http://api.openweathermap.org/data/2.5/weather?zip=32405,us&APPID=5a448d218d027a8293c6f74cc606c4eb");
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.d(TAG, "Response: " + response.toString());
 
-                //Open request to OpenWeather
-                urlConnection = (HttpURLConnection) url.openConnection();
-                urlConnection.setRequestMethod("GET");
-                urlConnection.connect();
-
-                //Receive JSON data
-                InputStream inputStream = urlConnection.getInputStream();
-                StringBuilder builder = new StringBuilder();
-                if (inputStream == null) {
-                    //Didn't receive anything
-                    return null;
-                }
-                reader = new BufferedReader(new InputStreamReader(inputStream));
-
-                String line;
-                while ((line = reader.readLine()) != null) {
-                    builder.append(line);
-                    builder.append("\n");
-                }
-                if (builder.length() == 0) {
-                    // Stream was empty.  No point in parsing.
-                    return null;
-                }
-                weatherData = builder.toString();
-
-                try {
-                    JSONObject jsonObject = new JSONObject(weatherData);
-                    skyCondition = jsonObject.getJSONArray("weather").getJSONObject(0).getInt("id");
-                    Log.v("JSONTry", "Sky Condition: " + skyCondition);
-                } catch (JSONException e) {
-                    Log.e("JSON error", "couldnt resolve data", e);
-                }
-
-            } catch (IOException e) {
-                Log.e(TAG, "Error ", e);
-
-            } finally {
-
-                //close connection
-                if (urlConnection != null) {
-                    urlConnection.disconnect();
-                }
-                if (reader != null) {
-                    try {
-                        reader.close();
-                    } catch (final IOException e) {
-                        Log.e(TAG, "Error closing stream", e);
+                        int weatherId = getWeatherId(response);
+                        updateBackground(weatherId);
                     }
-                }
-            }
-            return skyCondition;
+                }, new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e(TAG, "failed to obtain weather: " + error.toString());
+                    }
+                });
+        // add to queue
+        queue.add(weatherRequest);
+    }
+
+    // TODO: use GSON for this?
+    private int getWeatherId(JSONObject jsonObject) {
+
+        if (jsonObject == null) {
+            return 0;
         }
 
-        // set weather type screen on activity_main activity_menu
-        @Override
-        protected void onPostExecute(Integer integer) {
-            super.onPostExecute(integer);
+        JSONArray weather = null;
+        try {
+            weather = jsonObject.getJSONArray("weather");
+        } catch (JSONException e) {
+            Log.e(TAG, "failed to get weather arr", e);
+        }
 
-            if (integer != null) {
-                switch (integer) {
-                    case 800:  // sunny
-                        menuLayout.setBackgroundResource(R.drawable.screensunny);
-                        break;
-                    case 531:  // rainy
-                        menuLayout.setBackgroundResource(R.drawable.screenrain);
-                        break;
-                    default:  // partly cloudy
-                        menuLayout.setBackgroundResource(R.drawable.screenpartly);
-                        break;
-                }
-            }
+        if (weather == null || weather.length() < 1) {
+            return 0;
+        }
+
+        JSONObject weatherObj = null;
+        try {
+            weatherObj = (JSONObject) weather.get(0);
+        } catch (JSONException e) {
+            Log.e(TAG, "failed to get weather obj", e);
+        }
+
+        if (weatherObj == null) {
+            return 0;
+        }
+
+        int weatherId = 0;
+        try {
+            weatherId = weatherObj.getInt("id");
+        } catch (JSONException e) {
+            Log.e(TAG, "failed to get weather id", e);
+        }
+
+        return weatherId;
+    }
+
+    private void updateBackground(int weatherId) {
+
+        final RelativeLayout menuLayout = findViewById(R.id.menu_layout);
+
+        if (weatherId >= 200 & weatherId <= 531) {
+            // groups 2xx, 3xx and 5xx all rain
+            menuLayout.setBackgroundResource(R.drawable.screenrain);
+        } else if (weatherId == 800) {
+            // sunny code
+            menuLayout.setBackgroundResource(R.drawable.screensunny);
+        } else {
+            // default to cloudy
+            menuLayout.setBackgroundResource(R.drawable.screenpartly);
         }
     }
 

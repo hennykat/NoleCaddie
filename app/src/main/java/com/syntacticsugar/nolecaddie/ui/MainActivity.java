@@ -8,7 +8,7 @@ import android.view.MenuItem;
 
 import android.content.Intent;
 
-import syntacticsugar.nolecaddie.R;
+import com.syntacticsugar.nolecaddie.R;
 
 /**
  * Updated by henny 2018

@@ -26,10 +26,9 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
+import com.syntacticsugar.nolecaddie.R;
 
 import java.text.DecimalFormat;
-
-import syntacticsugar.nolecaddie.R;
 
 /**
  * Created by Dalton on 7/6/2015.

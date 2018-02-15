@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="syntacticsugar.nolecaddie" >
+    package="com.syntacticsugar.nolecaddie">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="myapp.permission.MAPS_RECEIVE"/>
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="myapp.permission.MAPS_RECEIVE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
 
     <application
         android:allowBackup="true"
@@ -14,29 +14,35 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
 
-        <activity android:name="com.syntacticsugar.nolecaddie.ui.SplashActivity"
-                  android:screenOrientation="portrait"
-                  android:configChanges="keyboardHidden|orientation|screenSize">
+        <activity
+            android:name="com.syntacticsugar.nolecaddie.ui.SplashActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
-        <activity android:name="com.syntacticsugar.nolecaddie.ui.TabBar"
-                  android:label="@string/app_name"/>
-        <activity android:name="com.syntacticsugar.nolecaddie.ui.MenuActivity"
-                  android:screenOrientation="portrait"
-                  android:configChanges="keyboardHidden|orientation|screenSize"/>
-        <activity android:name="com.syntacticsugar.nolecaddie.ui.MainTab"
-                  android:screenOrientation="portrait"
-                  android:configChanges="keyboardHidden|orientation|screenSize"/>
-        <activity android:name="com.syntacticsugar.nolecaddie.ui.ScoreTab"
-                  android:screenOrientation="portrait"
-                  android:configChanges="keyboardHidden|orientation|screenSize"/>
-        <activity android:name="com.syntacticsugar.nolecaddie.ui.EditScore"
-            android:screenOrientation="portrait"
-            android:configChanges="keyboardHidden|orientation|screenSize"/>
+        <activity
+            android:name="com.syntacticsugar.nolecaddie.ui.TabBar"
+            android:label="@string/app_name" />
+        <activity
+            android:name="com.syntacticsugar.nolecaddie.ui.MenuActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.syntacticsugar.nolecaddie.ui.MainTab"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.syntacticsugar.nolecaddie.ui.ScoreTab"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.syntacticsugar.nolecaddie.ui.EditScore"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:screenOrientation="portrait" />
         <activity android:name="com.syntacticsugar.nolecaddie.ui.MainActivity" />
 
     </application>

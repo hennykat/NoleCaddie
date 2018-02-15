@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.TabHost;
 
-import syntacticsugar.nolecaddie.R;
+import com.syntacticsugar.nolecaddie.R;
 
 /**
  * Created by Dalton on 7/6/2015.

@@ -27,4 +27,7 @@
 
     </string-array>
 
+    <!-- move this -->
+    <string name="weather_id">5a448d218d027a8293c6f74cc606c4eb</string>
+
 </resources>

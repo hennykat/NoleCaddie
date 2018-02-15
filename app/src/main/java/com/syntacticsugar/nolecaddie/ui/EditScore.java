@@ -6,7 +6,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
-import syntacticsugar.nolecaddie.R;
+import com.syntacticsugar.nolecaddie.R;
+
 
 /**
  * Created by sam on 7/26/15.
