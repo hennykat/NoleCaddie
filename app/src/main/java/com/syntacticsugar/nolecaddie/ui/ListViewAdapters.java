@@ -1,4 +1,4 @@
-package com.syntacticsugar.nolecaddie;
+package com.syntacticsugar.nolecaddie.ui;
 
 /**
  * Created by sam on 7/17/15.
@@ -17,9 +17,9 @@ import android.widget.TextView;
 
 import syntacticsugar.nolecaddie.R;
 
-import static com.syntacticsugar.nolecaddie.Constants.FIRST_COLUMN;
-import static com.syntacticsugar.nolecaddie.Constants.SECOND_COLUMN;
-import static com.syntacticsugar.nolecaddie.Constants.THIRD_COLUMN;
+import static com.syntacticsugar.nolecaddie.model.Constants.FIRST_COLUMN;
+import static com.syntacticsugar.nolecaddie.model.Constants.SECOND_COLUMN;
+import static com.syntacticsugar.nolecaddie.model.Constants.THIRD_COLUMN;
 
 public class ListViewAdapters extends BaseAdapter{
 

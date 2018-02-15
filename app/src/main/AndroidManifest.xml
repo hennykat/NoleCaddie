@@ -14,7 +14,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
 
-        <activity android:name="com.syntacticsugar.nolecaddie.Splash"
+        <activity android:name="com.syntacticsugar.nolecaddie.ui.Splash"
                   android:screenOrientation="portrait"
                   android:configChanges="keyboardHidden|orientation|screenSize">
             <intent-filter>
@@ -23,18 +23,18 @@
             </intent-filter>
         </activity>
 
-        <activity android:name="com.syntacticsugar.nolecaddie.TabBar"
+        <activity android:name="com.syntacticsugar.nolecaddie.ui.TabBar"
                   android:label="@string/app_name"/>
-        <activity android:name="com.syntacticsugar.nolecaddie.MenuScreen"
+        <activity android:name="com.syntacticsugar.nolecaddie.ui.MenuScreen"
                   android:screenOrientation="portrait"
                   android:configChanges="keyboardHidden|orientation|screenSize"/>
-        <activity android:name="com.syntacticsugar.nolecaddie.MainTab"
+        <activity android:name="com.syntacticsugar.nolecaddie.ui.MainTab"
                   android:screenOrientation="portrait"
                   android:configChanges="keyboardHidden|orientation|screenSize"/>
-        <activity android:name="com.syntacticsugar.nolecaddie.ScoreTab"
+        <activity android:name="com.syntacticsugar.nolecaddie.ui.ScoreTab"
                   android:screenOrientation="portrait"
                   android:configChanges="keyboardHidden|orientation|screenSize"/>
-        <activity android:name="com.syntacticsugar.nolecaddie.EditScore"
+        <activity android:name="com.syntacticsugar.nolecaddie.ui.EditScore"
             android:screenOrientation="portrait"
             android:configChanges="keyboardHidden|orientation|screenSize"/>
 

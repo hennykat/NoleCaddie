@@ -1,4 +1,4 @@
-package com.syntacticsugar.nolecaddie;
+package com.syntacticsugar.nolecaddie.ui;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -19,7 +19,7 @@ public class EditScore extends Activity{
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.edit);
-        
+
         strokeText = (TextView) findViewById(R.id.editStrokesText);
         strokeText.setText(String.valueOf(MainTab.currentStroke));
     }

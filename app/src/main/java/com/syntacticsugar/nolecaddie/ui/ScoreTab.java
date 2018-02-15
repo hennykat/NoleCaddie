@@ -1,4 +1,4 @@
-package com.syntacticsugar.nolecaddie;
+package com.syntacticsugar.nolecaddie.ui;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -6,14 +6,18 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ListView;
 
+import com.syntacticsugar.nolecaddie.ui.ListViewAdapters;
+import com.syntacticsugar.nolecaddie.ui.MainTab;
+import com.syntacticsugar.nolecaddie.ui.MenuScreen;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import syntacticsugar.nolecaddie.R;
 
-import static com.syntacticsugar.nolecaddie.Constants.FIRST_COLUMN;
-import static com.syntacticsugar.nolecaddie.Constants.SECOND_COLUMN;
-import static com.syntacticsugar.nolecaddie.Constants.THIRD_COLUMN;
+import static com.syntacticsugar.nolecaddie.model.Constants.FIRST_COLUMN;
+import static com.syntacticsugar.nolecaddie.model.Constants.SECOND_COLUMN;
+import static com.syntacticsugar.nolecaddie.model.Constants.THIRD_COLUMN;
 
 /**
  * Created by Dalton on 7/10/2015.

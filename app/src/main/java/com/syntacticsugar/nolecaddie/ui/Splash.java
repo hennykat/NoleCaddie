@@ -1,4 +1,4 @@
-package com.syntacticsugar.nolecaddie;
+package com.syntacticsugar.nolecaddie.ui;
 
 import android.app.Activity;
 import android.content.Intent;
