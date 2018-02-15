@@ -1,4 +1,4 @@
-package syntacticsugar.golfproject;
+package com.syntacticsugar.nolecaddie;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -9,13 +9,16 @@ import android.widget.ListView;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import static syntacticsugar.golfproject.Constants.FIRST_COLUMN;
-import static syntacticsugar.golfproject.Constants.SECOND_COLUMN;
-import static syntacticsugar.golfproject.Constants.THIRD_COLUMN;
+import syntacticsugar.nolecaddie.R;
+
+import static com.syntacticsugar.nolecaddie.Constants.FIRST_COLUMN;
+import static com.syntacticsugar.nolecaddie.Constants.SECOND_COLUMN;
+import static com.syntacticsugar.nolecaddie.Constants.THIRD_COLUMN;
 
 /**
  * Created by Dalton on 7/10/2015.
  * Edited by Sam on 7/16/2015
+ * Updated by henny 2018
  */
 public class ScoreTab extends Activity {
 

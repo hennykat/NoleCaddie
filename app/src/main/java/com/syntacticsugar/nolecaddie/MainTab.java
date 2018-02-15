@@ -1,4 +1,4 @@
-package syntacticsugar.golfproject;
+package com.syntacticsugar.nolecaddie;
 
 import android.content.Intent;
 import android.content.IntentSender;
@@ -28,10 +28,12 @@ import com.google.android.gms.maps.model.PolylineOptions;
 
 import java.text.DecimalFormat;
 
+import syntacticsugar.nolecaddie.R;
+
 /**
  * Created by Dalton on 7/6/2015.
  * Edited by Sam on 7/10/2015, Blake
- * Updated by Henny 2018
+ * Updated by henny 2018
  */
 public class MainTab extends FragmentActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener{

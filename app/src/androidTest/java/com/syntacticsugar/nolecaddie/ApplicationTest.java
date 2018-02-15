@@ -1,4 +1,4 @@
-package syntacticsugar.golfproject;
+package syntacticsugar.nolecaddie;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

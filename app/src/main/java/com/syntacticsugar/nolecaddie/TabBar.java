@@ -1,4 +1,4 @@
-package syntacticsugar.golfproject;
+package com.syntacticsugar.nolecaddie;
 
 import android.app.TabActivity;
 import android.content.Intent;
@@ -6,8 +6,11 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.TabHost;
 
+import syntacticsugar.nolecaddie.R;
+
 /**
  * Created by Dalton on 7/6/2015.
+ * Updated by henny 2018
  */
 public class TabBar extends TabActivity implements TabHost.OnTabChangeListener {
 
@@ -27,7 +30,7 @@ public class TabBar extends TabActivity implements TabHost.OnTabChangeListener {
         TabHost.TabSpec spec;
         Intent intent;
 
-        /************* TAB1 ************/
+        // TAB 1
         // Create  Intents to launch an Activity for the tab (to be reused)
         intent = new Intent().setClass(this, MainTab.class);
         spec = tabHost.newTabSpec("First").setIndicator("Game")
@@ -36,7 +39,7 @@ public class TabBar extends TabActivity implements TabHost.OnTabChangeListener {
         //Add intent to tab
         tabHost.addTab(spec);
 
-        /************* TAB2 ************/
+        // TAB 2
         intent = new Intent().setClass(this, ScoreTab.class);
         spec = tabHost.newTabSpec("Second").setIndicator("Score")
                 .setContent(intent);

@@ -1,4 +1,4 @@
-package syntacticsugar.golfproject;
+package com.syntacticsugar.nolecaddie;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -8,10 +8,12 @@ import android.view.MenuItem;
 
 import android.content.Intent;
 
+import syntacticsugar.nolecaddie.R;
 
+/**
+ * Updated by henny 2018
+ */
 public class MainActivity extends Activity {
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +47,5 @@ public class MainActivity extends Activity {
         Intent intent = new Intent(this,MainTab.class);
         startActivity(intent);
     }
-
 
 }

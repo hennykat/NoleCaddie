@@ -1,4 +1,4 @@
-package syntacticsugar.golfproject;
+package com.syntacticsugar.nolecaddie;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -18,11 +18,13 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import syntacticsugar.nolecaddie.R;
+
 /**
  * Created by Dalton on 7/6/2015.
  * Edited by Sam on 7/16/2015.
  * Edited by Blake 7/21/2015.
- * Updated by Henny 2018
+ * Updated by henny 2018
  */
 public class MenuScreen extends Activity {
 

@@ -1,11 +1,9 @@
-package syntacticsugar.golfproject;
+package com.syntacticsugar.nolecaddie;
 
 /**
  * Created by sam on 7/17/15.
+ * Updated by Henny 2018
  */
-import static syntacticsugar.golfproject.Constants.FIRST_COLUMN;
-import static syntacticsugar.golfproject.Constants.SECOND_COLUMN;
-import static syntacticsugar.golfproject.Constants.THIRD_COLUMN;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -16,6 +14,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
+
+import syntacticsugar.nolecaddie.R;
+
+import static com.syntacticsugar.nolecaddie.Constants.FIRST_COLUMN;
+import static com.syntacticsugar.nolecaddie.Constants.SECOND_COLUMN;
+import static com.syntacticsugar.nolecaddie.Constants.THIRD_COLUMN;
 
 public class ListViewAdapters extends BaseAdapter{
 
