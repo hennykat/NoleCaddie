@@ -21,7 +21,8 @@ import java.net.URL;
 /**
  * Created by Dalton on 7/6/2015.
  * Edited by Sam on 7/16/2015.
- * Edited by Blake 7/21/2015
+ * Edited by Blake 7/21/2015.
+ * Updated by Henny 2018
  */
 public class MenuScreen extends Activity {
 
@@ -64,7 +65,8 @@ public class MenuScreen extends Activity {
 
             try{
                 //url conforms to OpenWeather api call for zipcode 32405, zip for FSU-PC
-                URL url = new URL("http://api.openweathermap.org/data/2.5/weather?zip=32405,us");
+                // TODO: abstract app id
+                URL url = new URL("http://api.openweathermap.org/data/2.5/weather?zip=32405,us&APPID=5a448d218d027a8293c6f74cc606c4eb");
 
                 //Open request to OpenWeather
                 urlConnection = (HttpURLConnection) url.openConnection();

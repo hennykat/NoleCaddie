@@ -31,6 +31,7 @@ import java.text.DecimalFormat;
 /**
  * Created by Dalton on 7/6/2015.
  * Edited by Sam on 7/10/2015, Blake
+ * Updated by Henny 2018
  */
 public class MainTab extends FragmentActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener{
@@ -101,13 +102,13 @@ public class MainTab extends FragmentActivity implements OnMapReadyCallback, Goo
         if (!isGooglePlayServicesAvailable()) {
             finish();
         }
-        googleMap = mapFragment.getMap();
-        googleMap.setMyLocationEnabled(true);
-        locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
-        criteria = new Criteria();
-        bestProvider = locationManager.getBestProvider(criteria, true);
-
-        mCurrentLocation = locationManager.getLastKnownLocation(bestProvider);
+//        googleMap = mapFragment.getMap();
+//        googleMap.setMyLocationEnabled(true);
+//        locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+//        criteria = new Criteria();
+//        bestProvider = locationManager.getBestProvider(criteria, true);
+//
+//        mCurrentLocation = locationManager.getLastKnownLocation(bestProvider);
 
 
         if (mCurrentLocation != null) {
@@ -214,7 +215,7 @@ public class MainTab extends FragmentActivity implements OnMapReadyCallback, Goo
                 Toast.LENGTH_SHORT).show();
         ++currentStroke;
         strokeText.setText(String.valueOf(currentStroke));
-        locationManager.requestSingleUpdate(criteria,myLocationListener,null);
+//        locationManager.requestSingleUpdate(criteria,myLocationListener,null);
 
     }
 
