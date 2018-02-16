@@ -98,8 +98,8 @@ public class MainTab extends FragmentActivity implements OnMapReadyCallback, Goo
         holeText.setText(String.valueOf(currentHole));
         strokeText.setText(String.valueOf(currentStroke));
 
-        mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map);
+//        mapFragment = (SupportMapFragment) getSupportFragmentManager()
+//                .findFragmentById(R.id.map);
 
         if (!isGooglePlayServicesAvailable()) {
             finish();

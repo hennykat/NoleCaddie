@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.RelativeLayout;
 
 import com.android.volley.Request;
@@ -40,6 +41,14 @@ public class MenuActivity extends AppCompatActivity {
 
         // setup request queue
         this.volleyQueue = Volley.newRequestQueue(this);
+
+        final Button startButton = findViewById(R.id.menu_start_button);
+        startButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startGame();
+            }
+        });
     }
 
     @Override
@@ -56,7 +65,7 @@ public class MenuActivity extends AppCompatActivity {
         this.volleyQueue.cancelAll(TAG);
     }
 
-    public void startGame(View view) {
+    private void startGame() {
         Intent mainIntent = new Intent(MenuActivity.this, MainTab.class);
         startActivity(mainIntent);
         finish();
@@ -130,5 +139,4 @@ public class MenuActivity extends AppCompatActivity {
             menuLayout.setBackgroundResource(R.drawable.screenpartly);
         }
     }
-
 }
