@@ -11,14 +11,15 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.gson.Gson;
 import com.syntacticsugar.nolecaddie.R;
 import com.syntacticsugar.nolecaddie.config.AppConfig;
+import com.syntacticsugar.nolecaddie.model.Weather;
+import com.syntacticsugar.nolecaddie.model.WeatherCondition;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+import java.util.List;
 
 /**
  * Created by Dalton on 7/6/2015.
@@ -72,14 +73,14 @@ public class MenuActivity extends AppCompatActivity {
         final String url = AppConfig.WEATHER_URL + appId;
 
         // request json
-        JsonObjectRequest weatherRequest = new JsonObjectRequest
-                (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+        StringRequest weatherRequest = new StringRequest
+                (Request.Method.GET, url, new Response.Listener<String>() {
 
                     @Override
-                    public void onResponse(JSONObject response) {
-                        Log.d(TAG, "Response: " + response.toString());
+                    public void onResponse(String response) {
+                        Log.d(TAG, "Response: " + response);
 
-                        int weatherId = getWeatherId(response);
+                        Integer weatherId = getWeatherId(response);
                         updateBackground(weatherId);
                     }
                 }, new Response.ErrorListener() {
@@ -94,49 +95,30 @@ public class MenuActivity extends AppCompatActivity {
         volleyQueue.add(weatherRequest);
     }
 
-    // TODO: use GSON for this?
-    private int getWeatherId(JSONObject jsonObject) {
+    private Integer getWeatherId(String jsonString) {
 
-        if (jsonObject == null) {
+        if (jsonString == null) {
             return 0;
         }
 
-        JSONArray weather = null;
-        try {
-            weather = jsonObject.getJSONArray("weather");
-        } catch (JSONException e) {
-            Log.e(TAG, "failed to get weather arr", e);
-        }
+        Gson gson = new Gson();
+        Weather weather = gson.fromJson(jsonString, Weather.class);
 
-        if (weather == null || weather.length() < 1) {
+        if (weather == null) {
             return 0;
         }
 
-        JSONObject weatherObj = null;
-        try {
-            weatherObj = (JSONObject) weather.get(0);
-        } catch (JSONException e) {
-            Log.e(TAG, "failed to get weather obj", e);
-        }
-
-        if (weatherObj == null) {
+        List<WeatherCondition> conditionList = weather.getWeather();
+        if (conditionList == null || conditionList.isEmpty()) {
             return 0;
         }
 
-        int weatherId = 0;
-        try {
-            weatherId = weatherObj.getInt("id");
-        } catch (JSONException e) {
-            Log.e(TAG, "failed to get weather id", e);
-        }
-
-        return weatherId;
+        return conditionList.get(0).getId();
     }
 
-    private void updateBackground(int weatherId) {
+    private void updateBackground(Integer weatherId) {
 
         final RelativeLayout menuLayout = findViewById(R.id.menu_layout);
-
         if (weatherId >= 200 & weatherId <= 531) {
             // groups 2xx, 3xx and 5xx all rain
             menuLayout.setBackgroundResource(R.drawable.screenrain);
