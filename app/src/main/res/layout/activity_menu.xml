@@ -3,8 +3,7 @@
     android:id="@+id/menu_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/screensunny"
-    android:orientation="vertical">
+    android:background="@drawable/screensunny">
 
     <ImageView
         android:layout_width="match_parent"
@@ -12,6 +11,7 @@
         android:layout_above="@id/start_button"
         android:layout_centerHorizontal="true"
         android:background="@drawable/title"
+        android:contentDescription="@string/app_name"
         android:paddingBottom="30dp" />
 
     <Button

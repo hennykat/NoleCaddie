@@ -1,8 +1,8 @@
 package com.syntacticsugar.nolecaddie.ui;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.RelativeLayout;
@@ -14,7 +14,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.syntacticsugar.nolecaddie.R;
-import com.syntacticsugar.nolecaddie.model.AppConfig;
+import com.syntacticsugar.nolecaddie.config.AppConfig;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -26,14 +26,19 @@ import org.json.JSONObject;
  * Edited by Blake 7/21/2015.
  * Updated by henny 2018
  */
-public class MenuActivity extends Activity {
+public class MenuActivity extends AppCompatActivity {
 
     public static final String TAG = MenuActivity.class.getSimpleName();
+
+    private RequestQueue volleyQueue;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
+
+        // setup request queue
+        this.volleyQueue = Volley.newRequestQueue(this);
 
         getWeather();
     }
@@ -46,8 +51,11 @@ public class MenuActivity extends Activity {
 
     private void getWeather() {
 
-        // setup queue
-        RequestQueue queue = Volley.newRequestQueue(this);
+        if (volleyQueue == null) {
+            Log.w(TAG, "failed to get weather, invalid request queue");
+            return;
+        }
+
         final String appId = getResources().getString(R.string.weather_id);
         final String url = AppConfig.WEATHER_URL + appId;
 
@@ -70,7 +78,7 @@ public class MenuActivity extends Activity {
                     }
                 });
         // add to queue
-        queue.add(weatherRequest);
+        volleyQueue.add(weatherRequest);
     }
 
     // TODO: use GSON for this?

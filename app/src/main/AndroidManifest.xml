@@ -29,8 +29,8 @@
             android:label="@string/app_name" />
         <activity
             android:name="com.syntacticsugar.nolecaddie.ui.MenuActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name="com.syntacticsugar.nolecaddie.ui.MainTab"
             android:configChanges="keyboardHidden|orientation|screenSize"

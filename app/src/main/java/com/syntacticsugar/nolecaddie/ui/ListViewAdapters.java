@@ -12,9 +12,9 @@ import android.widget.TextView;
 
 import com.syntacticsugar.nolecaddie.R;
 
-import static com.syntacticsugar.nolecaddie.model.AppConfig.FIRST_COLUMN;
-import static com.syntacticsugar.nolecaddie.model.AppConfig.SECOND_COLUMN;
-import static com.syntacticsugar.nolecaddie.model.AppConfig.THIRD_COLUMN;
+import static com.syntacticsugar.nolecaddie.config.AppConfig.FIRST_COLUMN;
+import static com.syntacticsugar.nolecaddie.config.AppConfig.SECOND_COLUMN;
+import static com.syntacticsugar.nolecaddie.config.AppConfig.THIRD_COLUMN;
 
 /**
  * Created by sam on 7/17/15.

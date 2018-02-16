@@ -1,4 +1,4 @@
-package com.syntacticsugar.nolecaddie.model;
+package com.syntacticsugar.nolecaddie.config;
 
 /**
  * Created by sam on 7/17/15.

@@ -11,9 +11,9 @@ import com.syntacticsugar.nolecaddie.R;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import static com.syntacticsugar.nolecaddie.model.AppConfig.FIRST_COLUMN;
-import static com.syntacticsugar.nolecaddie.model.AppConfig.SECOND_COLUMN;
-import static com.syntacticsugar.nolecaddie.model.AppConfig.THIRD_COLUMN;
+import static com.syntacticsugar.nolecaddie.config.AppConfig.FIRST_COLUMN;
+import static com.syntacticsugar.nolecaddie.config.AppConfig.SECOND_COLUMN;
+import static com.syntacticsugar.nolecaddie.config.AppConfig.THIRD_COLUMN;
 
 /**
  * Created by Dalton on 7/10/2015.
