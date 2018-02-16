@@ -39,8 +39,20 @@ public class MenuActivity extends AppCompatActivity {
 
         // setup request queue
         this.volleyQueue = Volley.newRequestQueue(this);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
 
         getWeather();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+
+        this.volleyQueue.cancelAll(TAG);
     }
 
     public void startGame(View view) {
@@ -78,6 +90,7 @@ public class MenuActivity extends AppCompatActivity {
                     }
                 });
         // add to queue
+        weatherRequest.setTag(TAG);
         volleyQueue.add(weatherRequest);
     }
 
