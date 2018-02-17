@@ -27,6 +27,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.syntacticsugar.nolecaddie.R;
+import com.syntacticsugar.nolecaddie.config.AppConfig;
 
 import java.text.DecimalFormat;
 
@@ -37,29 +38,6 @@ import java.text.DecimalFormat;
  */
 public class MainActivity extends FragmentActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener {
-
-    int[] parArray = {2, 3, 3, 3, 3, 3, 3, 2, 4, 3, 3, 2, 3, 3, 2, 2, 2, 2};
-
-    protected static final LatLng[] holeLocations = new LatLng[]{
-            new LatLng(30.190003, -85.724264), //hole 1
-            new LatLng(30.189567, -85.724789), //hole 2
-            new LatLng(30.189336, -85.724953), //hole 3
-            new LatLng(30.188992, -85.725439), //hole 4
-            new LatLng(30.189200, -85.725322), //hole 5
-            new LatLng(30.189086, -85.725586), //hole 6
-            new LatLng(30.189483, -85.725283), //hole 7
-            new LatLng(30.189558, -85.724944), //hole 8
-            new LatLng(30.190283, -85.724247), //hole 9
-            new LatLng(30.190758, -85.723369), //hole 10
-            new LatLng(30.190142, -85.722667), //hole 11
-            new LatLng(30.190375, -85.721986), //hole 12
-            new LatLng(30.191125, -85.721831), //hole 13
-            new LatLng(30.191375, -85.722125), //hole 14
-            new LatLng(30.191053, -85.722194), //hole 15
-            new LatLng(30.191025, -85.722619), //hole 16
-            new LatLng(30.190789, -85.723086), //hole 17
-            new LatLng(30.190328, -85.723506)  //hole 18
-    };
 
     public static final String TAG = MainActivity.class.getSimpleName();
     private final static int CONNECTION_FAILURE_RESOLUTION_REQUEST = 9000;
@@ -151,7 +129,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
     private void updateCurrentLocation(Location location) {
 
         if (location != null) {
-            currentHoleLatLng = holeLocations[currentHole - 1];
+            currentHoleLatLng = AppConfig.HOLE_LOCATIONS[currentHole - 1];
             myCurrentLat = mCurrentLocation.getLatitude();
             myCurrentLng = mCurrentLocation.getLongitude();
             currentLocation = new LatLng(myCurrentLat, myCurrentLng);
@@ -223,7 +201,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     public String checkPar(int hole) {
-        return Integer.toString(parArray[(hole - 1)]);
+        return Integer.toString(AppConfig.HOLE_PARS[(hole - 1)]);
     }
 
     public void gotoMenu(View view) {
@@ -268,7 +246,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         //https://developers.google.com/maps/documentation/android/views#target_location
         googleMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
         Log.v("MapReady Hole is: ", " " + currentHole);
-        LatLng Hole = holeLocations[currentHole - 1];
+        LatLng Hole = AppConfig.HOLE_LOCATIONS[currentHole - 1];
     }
 
     @Override
