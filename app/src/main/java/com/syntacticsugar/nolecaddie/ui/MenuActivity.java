@@ -66,7 +66,7 @@ public class MenuActivity extends AppCompatActivity {
     }
 
     private void startGame() {
-        Intent mainIntent = new Intent(MenuActivity.this, MainTab.class);
+        Intent mainIntent = new Intent(MenuActivity.this, MainActivity.class);
         startActivity(mainIntent);
     }
 

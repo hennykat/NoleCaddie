@@ -35,7 +35,7 @@ import java.text.DecimalFormat;
  * Edited by Sam on 7/10/2015, Blake
  * Updated by henny 2018
  */
-public class MainTab extends FragmentActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks,
+public class MainActivity extends FragmentActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener {
 
     int[] parArray = {2, 3, 3, 3, 3, 3, 3, 2, 4, 3, 3, 2, 3, 3, 2, 2, 2, 2};
@@ -61,7 +61,7 @@ public class MainTab extends FragmentActivity implements OnMapReadyCallback, Goo
             new LatLng(30.190328, -85.723506)  //hole 18
     };
 
-    public static final String TAG = MainTab.class.getSimpleName();
+    public static final String TAG = MainActivity.class.getSimpleName();
     private final static int CONNECTION_FAILURE_RESOLUTION_REQUEST = 9000;
 
     private LatLng currentLocation;

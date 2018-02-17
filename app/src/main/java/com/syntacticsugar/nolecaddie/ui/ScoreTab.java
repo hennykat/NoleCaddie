@@ -49,15 +49,15 @@ public class ScoreTab extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
-        scoreInsert(Integer.toString(MainTab.currentHole), MainTab.currentPar, Integer.toString(MainTab.currentStroke));
+        scoreInsert(Integer.toString(MainActivity.currentHole), MainActivity.currentPar, Integer.toString(MainActivity.currentStroke));
         adapter.notifyDataSetChanged();
     }
 
     public void nextHole(View view) {
 
-        if (++MainTab.currentHole == 19) MainTab.currentHole = 1;
-        MainTab.currentStroke = 1;
-        Intent intent = new Intent(this, MainTab.class);
+        if (++MainActivity.currentHole == 19) MainActivity.currentHole = 1;
+        MainActivity.currentStroke = 1;
+        Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
 

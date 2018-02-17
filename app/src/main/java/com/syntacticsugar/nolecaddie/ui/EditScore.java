@@ -22,7 +22,7 @@ public class EditScore extends Activity {
         setContentView(R.layout.edit);
 
         strokeText = findViewById(R.id.editStrokesText);
-        strokeText.setText(String.valueOf(MainTab.currentStroke));
+        strokeText.setText(String.valueOf(MainActivity.currentStroke));
     }
 
     public void finishHole(View view) {
@@ -31,12 +31,12 @@ public class EditScore extends Activity {
     }
 
     public void upScore(View view) {
-        ++MainTab.currentStroke;
-        strokeText.setText(String.valueOf(MainTab.currentStroke));
+        ++MainActivity.currentStroke;
+        strokeText.setText(String.valueOf(MainActivity.currentStroke));
     }
 
     public void downScore(View view) {
-        --MainTab.currentStroke;
-        strokeText.setText(String.valueOf(MainTab.currentStroke));
+        --MainActivity.currentStroke;
+        strokeText.setText(String.valueOf(MainActivity.currentStroke));
     }
 }

@@ -32,7 +32,7 @@ public class TabBar extends TabActivity implements TabHost.OnTabChangeListener {
 
         // TAB 1
         // Create  Intents to launch an Activity for the tab (to be reused)
-        intent = new Intent().setClass(this, MainTab.class);
+        intent = new Intent().setClass(this, MainActivity.class);
         spec = tabHost.newTabSpec("First").setIndicator("Game")
                 .setContent(intent);
 
