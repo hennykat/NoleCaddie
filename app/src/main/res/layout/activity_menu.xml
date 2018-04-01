@@ -3,7 +3,7 @@
     android:id="@+id/menu_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/screensunny">
+    android:background="@drawable/weather_sunny">
 
     <ImageView
         android:layout_width="match_parent"
@@ -21,7 +21,7 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="10dp"
-        android:background="@drawable/buttonstart"
+        android:background="@drawable/button_text_start"
         android:padding="20dp" />
 
 </RelativeLayout>

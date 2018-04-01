@@ -212,7 +212,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
             googleMap.addMarker(new MarkerOptions()
                     .position(currentHoleLatLng)
                     .title("Hole " + currentHole)
-                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.basketmarker)));
+                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.marker_basket)));
 
             googleMap
                     .addPolyline((new PolylineOptions())

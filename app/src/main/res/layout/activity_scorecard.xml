@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/screengold"
+    android:background="@drawable/background_gold"
     android:orientation="vertical">
 
     <ImageView
@@ -11,7 +11,7 @@
         android:layout_height="75dp"
         android:layout_gravity="center"
         android:layout_margin="10dp"
-        android:background="@drawable/buttonscore"
+        android:background="@drawable/button_text_score"
         android:padding="20dp" />
 
     <LinearLayout
@@ -25,21 +25,21 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight=".3"
-            android:background="@drawable/titlehole" />
+            android:background="@drawable/text_hole" />
 
         <ImageView
             android:id="@+id/scorecard_par_title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight=".3"
-            android:background="@drawable/titlepar" />
+            android:background="@drawable/text_par" />
 
         <ImageView
             android:id="@+id/scorecard_stroke_title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight=".4"
-            android:background="@drawable/titlestroke" />
+            android:background="@drawable/text_stroke" />
     </LinearLayout>
 
     <LinearLayout
@@ -66,14 +66,14 @@
             android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:layout_gravity="start"
-            android:background="@drawable/buttonmenu" />
+            android:background="@drawable/button_text_menu" />
 
         <Button
             android:id="@+id/scorecard_next_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
-            android:background="@drawable/buttonnext" />
+            android:background="@drawable/button_text_next_hole" />
     </LinearLayout>
 
 </LinearLayout>

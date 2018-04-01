@@ -23,8 +23,8 @@ import static com.syntacticsugar.nolecaddie.config.AppConfig.THIRD_COLUMN;
  */
 public class ScorecardActivity extends AppCompatActivity {
 
-    public static ArrayList<HashMap<String, String>> list = new ArrayList<HashMap<String, String>>();
-    ListViewAdapters adapter;
+    public static ArrayList<HashMap<String, String>> list = new ArrayList<>();
+    private ListViewAdapters adapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -38,6 +38,7 @@ public class ScorecardActivity extends AppCompatActivity {
                 nextHole();
             }
         });
+
         final Button menuButton = findViewById(R.id.scorecard_menu_button);
         menuButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -46,19 +47,11 @@ public class ScorecardActivity extends AppCompatActivity {
             }
         });
 
+        // TODO: change to a table view
         // fill up listview
         ListView listView = findViewById(R.id.scorecard_score_listview);
         adapter = new ListViewAdapters(this, list);
         listView.setAdapter(adapter);
-    }//end onCreate
-
-    public void scoreInsert(String holeNum, String parNum, String userScore) {
-
-        HashMap<String, String> temp1 = new HashMap<String, String>();
-        temp1.put(FIRST_COLUMN, holeNum);
-        temp1.put(SECOND_COLUMN, parNum);
-        temp1.put(THIRD_COLUMN, userScore);
-        list.add(temp1);
     }
 
     @Override
@@ -66,6 +59,15 @@ public class ScorecardActivity extends AppCompatActivity {
         super.onResume();
         scoreInsert(Integer.toString(MainActivity.currentHole), MainActivity.currentPar, Integer.toString(MainActivity.currentStroke));
         adapter.notifyDataSetChanged();
+    }
+
+    private void scoreInsert(String holeNum, String parNum, String userScore) {
+
+        HashMap<String, String> temp1 = new HashMap<>();
+        temp1.put(FIRST_COLUMN, holeNum);
+        temp1.put(SECOND_COLUMN, parNum);
+        temp1.put(THIRD_COLUMN, userScore);
+        list.add(temp1);
     }
 
     private void nextHole() {

@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/screengarnett"
+    android:background="@drawable/background_garnet"
     android:orientation="vertical"
     android:weightSum="1">
 
@@ -20,7 +20,7 @@
             android:layout_height="fill_parent"
             android:layout_gravity="left"
             android:layout_weight=".2"
-            android:background="@drawable/titlestroke" />
+            android:background="@drawable/text_stroke" />
 
         <TextView
             android:id="@+id/main_stroke_textview"
@@ -38,7 +38,7 @@
             android:layout_width="0dp"
             android:layout_height="fill_parent"
             android:layout_weight=".2"
-            android:background="@drawable/titlehole"
+            android:background="@drawable/text_hole"
             android:gravity="center" />
 
         <TextView
@@ -58,7 +58,7 @@
             android:layout_height="fill_parent"
             android:layout_gravity="right"
             android:layout_weight=".3"
-            android:background="@drawable/buttonfinishhole" />
+            android:background="@drawable/button_text_finish_hole" />
 
 
     </LinearLayout>
@@ -75,7 +75,7 @@
             android:layout_width="0dp"
             android:layout_height="fill_parent"
             android:layout_weight=".3"
-            android:background="@drawable/distance" />
+            android:background="@drawable/text_distance" />
 
         <TextView
             android:id="@+id/main_distance_textview"
@@ -117,6 +117,6 @@
         android:layout_width="fill_parent"
         android:layout_height="0dp"
         android:layout_weight=".15"
-        android:background="@drawable/buttonthrow" />
+        android:background="@drawable/button_text_throw" />
 
 </LinearLayout>

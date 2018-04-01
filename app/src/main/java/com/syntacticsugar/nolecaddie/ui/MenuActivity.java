@@ -129,13 +129,13 @@ public class MenuActivity extends AppCompatActivity {
         final RelativeLayout menuLayout = findViewById(R.id.menu_layout);
         if (weatherId >= 200 & weatherId <= 531) {
             // groups 2xx, 3xx and 5xx all rain
-            menuLayout.setBackgroundResource(R.drawable.screenrain);
+            menuLayout.setBackgroundResource(R.drawable.weather_rain);
         } else if (weatherId == 800) {
             // sunny code
-            menuLayout.setBackgroundResource(R.drawable.screensunny);
+            menuLayout.setBackgroundResource(R.drawable.weather_sunny);
         } else {
             // default to cloudy
-            menuLayout.setBackgroundResource(R.drawable.screenpartly);
+            menuLayout.setBackgroundResource(R.drawable.weather_cloudy);
         }
     }
 }
