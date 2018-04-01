@@ -1,129 +1,122 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/screengarnett"
+    android:orientation="vertical"
     android:weightSum="1">
 
     <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:orientation="horizontal"
+        android:id="@+id/main_stroke_layout"
         android:layout_width="fill_parent"
         android:layout_height="0dp"
         android:layout_weight=".125"
-        android:id="@+id/linLayout"
+        android:orientation="horizontal"
         android:weightSum="1">
 
         <ImageView
-            android:id="@+id/stroketitle"
+            android:id="@+id/main_stroke_imageview"
             android:layout_width="0dp"
-            android:layout_weight=".2"
             android:layout_height="fill_parent"
             android:layout_gravity="left"
-            android:background="@drawable/titlestroke"
-            android:onClick="gotoMenu"/>
+            android:layout_weight=".2"
+            android:background="@drawable/titlestroke" />
 
         <TextView
+            android:id="@+id/main_stroke_textview"
             android:layout_width="0dp"
-            android:layout_weight=".15"
             android:layout_height="fill_parent"
+            android:layout_weight=".15"
             android:gravity="center_horizontal"
-            android:id="@+id/strokecount"
             android:text="@string/blank"
+            android:textColor="#ffffffff"
             android:textSize="40sp"
-            android:textStyle="bold"
-            android:textColor="#ffffffff" />
+            android:textStyle="bold" />
 
         <ImageView
-            android:id="@+id/strokes"
+            android:id="@+id/main_hole_imageview"
             android:layout_width="0dp"
-            android:layout_weight=".2"
             android:layout_height="fill_parent"
-            android:gravity="center"
+            android:layout_weight=".2"
             android:background="@drawable/titlehole"
-            android:onClick="gotoMenu"/>
+            android:gravity="center" />
 
         <TextView
+            android:id="@+id/main_hole_textview"
             android:layout_width="0dp"
-            android:layout_weight=".15"
             android:layout_height="fill_parent"
+            android:layout_weight=".15"
             android:gravity="center_horizontal"
-            android:id="@+id/holeNumber"
             android:text="@string/blank"
+            android:textColor="#ffffffff"
             android:textSize="40sp"
-            android:textStyle="bold"
-            android:textColor="#ffffffff" />
+            android:textStyle="bold" />
 
         <Button
-            android:id="@+id/nextButton"
+            android:id="@+id/main_finish_button"
             android:layout_width="0dp"
-            android:layout_weight=".3"
             android:layout_height="fill_parent"
             android:layout_gravity="right"
-            android:background="@drawable/buttonfinishhole"
-            android:onClick="finishHole"/>
+            android:layout_weight=".3"
+            android:background="@drawable/buttonfinishhole" />
 
 
     </LinearLayout>
 
     <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:orientation="horizontal"
+        android:id="@+id/main_distance_layout"
         android:layout_width="fill_parent"
         android:layout_height="0dp"
         android:layout_weight=".125"
-        android:layout_below="@id/linLayout"
-        android:id="@+id/linLayout2"
+        android:orientation="horizontal"
         android:weightSum="1">
 
         <ImageView
             android:layout_width="0dp"
-            android:layout_weight=".3"
             android:layout_height="fill_parent"
-            android:background="@drawable/distance"/>
+            android:layout_weight=".3"
+            android:background="@drawable/distance" />
 
         <TextView
+            android:id="@+id/main_distance_textview"
             android:layout_width="0dp"
-            android:layout_weight=".45"
             android:layout_height="fill_parent"
             android:layout_gravity="bottom"
+            android:layout_weight=".45"
             android:gravity="right"
-            android:id="@+id/distanceText"
             android:text="@string/blank"
+            android:textColor="#ffffffff"
             android:textSize="40sp"
-            android:textStyle="bold"
-            android:textColor="#ffffffff" />
+            android:textStyle="bold" />
+
         <TextView
+            android:id="@+id/main_meters_textview"
             android:layout_width="0dp"
-            android:layout_weight=".25"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
+            android:layout_weight=".25"
             android:gravity="center"
-            android:id="@+id/meters"
             android:text="@string/feet"
+            android:textColor="#ffffffff"
             android:textSize="20sp"
-            android:textStyle="bold"
-            android:textColor="#ffffffff" />
+            android:textStyle="bold" />
 
-        </LinearLayout>
+    </LinearLayout>
 
     <!--<fragment xmlns:android="http://schemas.android.com/apk/res/android"-->
-        <!--xmlns:map="http://schemas.android.com/apk/res-auto"-->
-        <!--android:name="com.google.android.gms.maps.SupportMapFragment"-->
-        <!--android:id="@+id/map"-->
-        <!--android:layout_width="fill_parent"-->
-        <!--android:layout_height="0dp"-->
-        <!--android:layout_weight=".6"-->
-        <!--android:layout_below="@id/linLayout2"/>-->
+    <!--xmlns:map="http://schemas.android.com/apk/res-auto"-->
+    <!--android:name="com.google.android.gms.maps.SupportMapFragment"-->
+    <!--android:id="@+id/map"-->
+    <!--android:layout_width="fill_parent"-->
+    <!--android:layout_height="0dp"-->
+    <!--android:layout_weight=".6"-->
+    <!--android:layout_below="@id/linLayout2"/>-->
 
     <Button
-        android:id="@+id/throwButton"
+        android:id="@+id/main_throw_button"
         android:layout_width="fill_parent"
         android:layout_height="0dp"
         android:layout_weight=".15"
-        android:background="@drawable/buttonthrow"
-        android:onClick="markStroke"/>
+        android:background="@drawable/buttonthrow" />
 
 </LinearLayout>

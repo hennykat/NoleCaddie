@@ -11,6 +11,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -57,7 +58,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
     double myCurrentLat;
     double myCurrentLng;
     double distanceToHole;
-    private TextView strokeText, distanceText, holeText;
+    private TextView strokeTextView, distanceTextView, holeTextView;
 
 /*  // map overlay stuff
     LatLng mapSWCorner = new LatLng(30.190333,-85.724764);
@@ -70,11 +71,27 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        distanceText = findViewById(R.id.distanceText);
-        holeText = findViewById(R.id.holeNumber);
-        strokeText = findViewById(R.id.strokecount);
-        holeText.setText(String.valueOf(currentHole));
-        strokeText.setText(String.valueOf(currentStroke));
+        distanceTextView = findViewById(R.id.main_distance_textview);
+        holeTextView = findViewById(R.id.main_hole_textview);
+        strokeTextView = findViewById(R.id.main_stroke_textview);
+
+        holeTextView.setText(String.valueOf(currentHole));
+        strokeTextView.setText(String.valueOf(currentStroke));
+
+        final Button throwButton = findViewById(R.id.main_throw_button);
+        throwButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                markStroke();
+            }
+        });
+        final Button finishButton = findViewById(R.id.main_finish_button);
+        finishButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finishHole();
+            }
+        });
 
 //        mapFragment = (SupportMapFragment) getSupportFragmentManager()
 //                .findFragmentById(R.id.map);
@@ -171,7 +188,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
 
             distanceToHole = CalculationByDistance(currentLocation, currentHoleLatLng);
 
-            distanceText.setText(String.valueOf(distanceToHole));
+            distanceTextView.setText(String.valueOf(distanceToHole));
         } else {
             Toast.makeText(getBaseContext(), "No Location Found", Toast.LENGTH_SHORT).show();
         }
@@ -189,13 +206,13 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         super.onPause();
     }
 
-    public void markStroke(View view) {
+    public void markStroke() {
 
         //display in short period of time
         Toast.makeText(getApplicationContext(), "Throw Marked.",
                 Toast.LENGTH_SHORT).show();
         ++currentStroke;
-        strokeText.setText(String.valueOf(currentStroke));
+        strokeTextView.setText(String.valueOf(currentStroke));
 //        locationManager.requestSingleUpdate(criteria,myLocationListener,null);
 
     }
@@ -204,12 +221,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         return Integer.toString(AppConfig.HOLE_PARS[(hole - 1)]);
     }
 
-    public void gotoMenu(View view) {
-        Intent intent = new Intent(this, MenuActivity.class);
-        startActivity(intent);
-    }
-
-    public void finishHole(View view) {
+    public void finishHole() {
         Intent intent = new Intent(this, EditScore.class);
         startActivity(intent);
     }
