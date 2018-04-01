@@ -1,9 +1,10 @@
 package com.syntacticsugar.nolecaddie.ui;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ListView;
 
 import com.syntacticsugar.nolecaddie.R;
@@ -20,7 +21,7 @@ import static com.syntacticsugar.nolecaddie.config.AppConfig.THIRD_COLUMN;
  * Edited by Sam on 7/16/2015
  * Updated by henny 2018
  */
-public class ScoreTab extends Activity {
+public class ScorecardActivity extends AppCompatActivity {
 
     public static ArrayList<HashMap<String, String>> list = new ArrayList<HashMap<String, String>>();
     ListViewAdapters adapter;
@@ -28,11 +29,25 @@ public class ScoreTab extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.score);
+        setContentView(R.layout.activity_scorecard);
 
+        final Button nextButton = findViewById(R.id.scorecard_next_button);
+        nextButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                nextHole();
+            }
+        });
+        final Button menuButton = findViewById(R.id.scorecard_menu_button);
+        menuButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goToMenu();
+            }
+        });
 
         // fill up listview
-        ListView listView = findViewById(R.id.listView1);
+        ListView listView = findViewById(R.id.scorecard_score_listview);
         adapter = new ListViewAdapters(this, list);
         listView.setAdapter(adapter);
     }//end onCreate
@@ -53,7 +68,7 @@ public class ScoreTab extends Activity {
         adapter.notifyDataSetChanged();
     }
 
-    public void nextHole(View view) {
+    private void nextHole() {
 
         if (++MainActivity.currentHole == 19) MainActivity.currentHole = 1;
         MainActivity.currentStroke = 1;
@@ -61,7 +76,7 @@ public class ScoreTab extends Activity {
         startActivity(intent);
     }
 
-    public void gotoMenu(View view) {
+    private void goToMenu() {
 
         Intent intent = new Intent(this, MenuActivity.class);
         startActivity(intent);

@@ -33,7 +33,7 @@
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.syntacticsugar.nolecaddie.ui.ScoreTab"
+            android:name="com.syntacticsugar.nolecaddie.ui.ScorecardActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:screenOrientation="portrait" />
         <activity

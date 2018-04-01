@@ -49,11 +49,6 @@ public class EditScoreActivity extends AppCompatActivity {
         });
     }
 
-    private void finishHole() {
-        Intent intent = new Intent(this, ScoreTab.class);
-        startActivity(intent);
-    }
-
     private void upScore() {
         ++MainActivity.currentStroke; // TODO: DESTROY this
         strokeTextView.setText(String.valueOf(MainActivity.currentStroke));
@@ -62,5 +57,10 @@ public class EditScoreActivity extends AppCompatActivity {
     private void downScore() {
         --MainActivity.currentStroke; // TODO: DESTROY this
         strokeTextView.setText(String.valueOf(MainActivity.currentStroke));
+    }
+
+    private void finishHole() {
+        Intent intent = new Intent(this, ScorecardActivity.class);
+        startActivity(intent);
     }
 }
