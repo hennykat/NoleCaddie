@@ -62,3 +62,7 @@ fastlane/Preview.html
 fastlane/screenshots
 fastlane/test_output
 fastlane/readme.md
+
+# api keys
+app/src/main/res/values/google_maps_api.xml
+app/src/main/res/values/open_weather_api.xml

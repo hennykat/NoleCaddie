@@ -11,7 +11,4 @@
     <string name="edit_score_down">-</string>
     <string name="edit_instructions">Adjust your strokes if you need to, otherwise click finish hole to mark your strokes</string>
 
-    <!-- move this -->
-    <string name="weather_id">5a448d218d027a8293c6f74cc606c4eb</string>
-
 </resources>

@@ -67,7 +67,8 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
     BitmapDescriptor mapOveryLayImage;
     LatLngBounds mapBounds; */
 
-    public void onCreate(Bundle savedInstanceState) {
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -93,14 +94,16 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
             }
         });
 
-        /* fix mess below this point */
+        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.main_map);
+        mapFragment.getMapAsync(this);
 
-//        mapFragment = (SupportMapFragment) getSupportFragmentManager()
-//                .findFragmentById(R.id.map);
+        //        mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.main_map);
 
-        if (!isGooglePlayServicesAvailable()) {
-            finish();
-        }
+//        if (!isGooglePlayServicesAvailable()) {
+//            finish();
+//        }
 //        googleMap = mapFragment.getMap();
 //        googleMap.setMyLocationEnabled(true);
 //        locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
@@ -109,17 +112,42 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
 //
 //        mCurrentLocation = locationManager.getLastKnownLocation(bestProvider);
 
-
-        if (mCurrentLocation != null) {
-            myLocationListener.onLocationChanged(mCurrentLocation);
-        } else {
-            Toast.makeText(getApplicationContext(), "No Location Available. Probably turned off.",
-                    Toast.LENGTH_SHORT).show();
-            //Intent intent =  new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-            //startActivity(intent);
-        }
+//
+//        if (mCurrentLocation != null) {
+//            myLocationListener.onLocationChanged(mCurrentLocation);
+//        } else {
+//            Toast.makeText(getApplicationContext(), "No Location Available. Probably turned off.",
+//                    Toast.LENGTH_SHORT).show();
+//            //Intent intent =  new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+//            //startActivity(intent);
+//        }
 
         //locationManager.requestLocationUpdates(bestProvider,20000,1,myLocationListener);
+    }
+
+    /**
+     * Manipulates the map once available.
+     * This callback is triggered when the map is ready to be used.
+     * This is where we can add markers or lines, add listeners or move the camera. In this case,
+     * we just add a marker near Sydney, Australia.
+     * If Google Play services is not installed on the device, the user will be prompted to install
+     * it inside the SupportMapFragment. This method will only be triggered once the user has
+     * installed Google Play services and returned to the app.
+     */
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        this.googleMap = googleMap;
+
+//        // Add a marker in Sydney and move the camera
+//        LatLng sydney = new LatLng(-34, 151);
+//        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
+//        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+
+        // original code snippets from google maps api reference
+        //https://developers.google.com/maps/documentation/android/views#target_location
+        googleMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
+        Log.v("MapReady Hole is: ", " " + currentHole);
+        LatLng Hole = AppConfig.HOLE_LOCATIONS[currentHole - 1];
     }
 
     @Override
@@ -251,15 +279,6 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
                 + " Meter   " + meterInDec);
 
         return Math.floor(((Radius * c) * 3280.84) * 100) / 100;
-    }
-
-    @Override
-    public void onMapReady(GoogleMap googleMap) {
-        // original code snippets from google maps api reference
-        //https://developers.google.com/maps/documentation/android/views#target_location
-        googleMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
-        Log.v("MapReady Hole is: ", " " + currentHole);
-        LatLng Hole = AppConfig.HOLE_LOCATIONS[currentHole - 1];
     }
 
     @Override

@@ -77,7 +77,7 @@ public class MenuActivity extends AppCompatActivity {
             return;
         }
 
-        final String appId = getResources().getString(R.string.weather_id);
+        final String appId = getResources().getString(R.string.open_weather_key);
         final String url = AppConfig.WEATHER_URL + appId;
 
         // request json

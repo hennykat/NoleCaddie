@@ -102,14 +102,12 @@
 
     </LinearLayout>
 
-    <!--<fragment xmlns:android="http://schemas.android.com/apk/res/android"-->
-    <!--xmlns:map="http://schemas.android.com/apk/res-auto"-->
-    <!--android:name="com.google.android.gms.maps.SupportMapFragment"-->
-    <!--android:id="@+id/map"-->
-    <!--android:layout_width="fill_parent"-->
-    <!--android:layout_height="0dp"-->
-    <!--android:layout_weight=".6"-->
-    <!--android:layout_below="@id/linLayout2"/>-->
+    <fragment
+        android:id="@+id/main_map"
+        class="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.6" />
 
     <Button
         android:id="@+id/main_throw_button"
