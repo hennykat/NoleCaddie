@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/screengold"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/edit_score_edit_imageview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/buttonscore"
+        android:gravity="center" />
+
+    <TextView
+        android:id="@+id/edit_score_title_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:text="@string/editmessage"
+        android:textColor="#ffffffff"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:orientation="horizontal"
+        android:weightSum="1">
+
+        <Button
+            android:id="@+id/edit_score_down_button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".3"
+            android:background="#ff6666"
+            android:text="-"
+            android:textColor="#ffffffff"
+            android:textSize="40sp" />
+
+        <TextView
+            android:id="@+id/edit_score_stroke_textview"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight=".4"
+            android:gravity="center_horizontal"
+            android:text="@string/blank"
+            android:textColor="#ffffffff"
+            android:textSize="40sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/edit_score_up_button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".3"
+            android:background="#33cc33"
+            android:text="+"
+            android:textColor="#ffffffff"
+            android:textSize="40sp" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/edit_score_finish_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:layout_marginTop="50dp"
+        android:background="@drawable/buttonfinishhole" />
+
+</LinearLayout>

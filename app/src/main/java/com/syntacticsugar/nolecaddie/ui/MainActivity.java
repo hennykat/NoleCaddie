@@ -93,6 +93,8 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
             }
         });
 
+        /* fix mess below this point */
+
 //        mapFragment = (SupportMapFragment) getSupportFragmentManager()
 //                .findFragmentById(R.id.map);
 
@@ -118,8 +120,39 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         }
 
         //locationManager.requestLocationUpdates(bestProvider,20000,1,myLocationListener);
+    }
 
-    }//end onCreate
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        currentPar = checkPar(currentHole);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+    }
+
+    public String checkPar(int hole) {
+        return Integer.toString(AppConfig.HOLE_PARS[(hole - 1)]);
+    }
+
+    private void markStroke() {
+
+        //display in short period of time
+        Toast.makeText(getApplicationContext(), "Throw Marked.", Toast.LENGTH_SHORT).show();
+        ++currentStroke;
+        strokeTextView.setText(String.valueOf(currentStroke));
+//        locationManager.requestSingleUpdate(criteria,myLocationListener,null);
+    }
+
+    private void finishHole() {
+        Intent intent = new Intent(this, EditScoreActivity.class);
+        startActivity(intent);
+    }
+
+    /* fix mess below this point */
 
     private final LocationListener myLocationListener = new LocationListener() {
         @Override
@@ -192,38 +225,6 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         } else {
             Toast.makeText(getBaseContext(), "No Location Found", Toast.LENGTH_SHORT).show();
         }
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-        currentPar = checkPar(currentHole);
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-    }
-
-    public void markStroke() {
-
-        //display in short period of time
-        Toast.makeText(getApplicationContext(), "Throw Marked.",
-                Toast.LENGTH_SHORT).show();
-        ++currentStroke;
-        strokeTextView.setText(String.valueOf(currentStroke));
-//        locationManager.requestSingleUpdate(criteria,myLocationListener,null);
-
-    }
-
-    public String checkPar(int hole) {
-        return Integer.toString(AppConfig.HOLE_PARS[(hole - 1)]);
-    }
-
-    public void finishHole() {
-        Intent intent = new Intent(this, EditScore.class);
-        startActivity(intent);
     }
 
     //***** taken from http://stackoverflow.com/questions/14394366/find-distance-between-two-points-on-map-using-google-map-api-v2 and modified
