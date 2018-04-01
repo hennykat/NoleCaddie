@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Theme Colours -->
     <color name="colorPrimary">#CEB888</color>
     <color name="colorPrimaryDark"> #782F40</color>
     <color name="colorAccent">#000000</color>
+    <!-- App -->
+    <color name="app_text">#FFFFFF</color>
+    <!-- EditScore Activity -->
+    <color name="edit_score_up">#33CC33</color>
+    <color name="edit_score_down">#FF6666</color>
 </resources>

@@ -1,31 +1,15 @@
 <resources>
+    <!-- App -->
     <string name="app_name">Nole Caddie</string>
+    <string name="app_blank">--</string>
 
-    <string name="action_settings">Settings</string>
-    <string name="feet">feet</string>
-    <string name="blank">--</string>
-    <string name="editmessage">Adjust your strokes if you need to, otherwise click finish hole to mark your strokes</string>
+    <!-- Main Activity -->
+    <string name="main_feet">feet</string>
 
-    <string-array name="holes">
-        <item>Hole 1</item>
-        <item>Hole 2</item>
-        <item>Hole 3</item>
-        <item>Hole 4</item>
-        <item>Hole 5</item>
-        <item>Hole 6</item>
-        <item>Hole 7</item>
-        <item>Hole 8</item>
-        <item>Hole 10</item>
-        <item>Hole 11</item>
-        <item>Hole 12</item>
-        <item>Hole 13</item>
-        <item>Hole 14</item>
-        <item>Hole 15</item>
-        <item>Hole 16</item>
-        <item>Hole 17</item>
-        <item>Hole 18</item>
-
-    </string-array>
+    <!-- EditScore Activity -->
+    <string name="edit_score_up">+</string>
+    <string name="edit_score_down">-</string>
+    <string name="edit_instructions">Adjust your strokes if you need to, otherwise click finish hole to mark your strokes</string>
 
     <!-- move this -->
     <string name="weather_id">5a448d218d027a8293c6f74cc606c4eb</string>

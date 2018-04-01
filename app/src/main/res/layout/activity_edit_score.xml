@@ -17,8 +17,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
-        android:text="@string/editmessage"
-        android:textColor="#ffffffff"
+        android:text="@string/edit_instructions"
+        android:textColor="@color/app_text"
         android:textSize="20sp"
         android:textStyle="bold" />
 
@@ -34,9 +34,9 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight=".3"
-            android:background="#ff6666"
-            android:text="-"
-            android:textColor="#ffffffff"
+            android:background="@color/edit_score_down"
+            android:text="@string/edit_score_down"
+            android:textColor="@color/app_text"
             android:textSize="40sp" />
 
         <TextView
@@ -45,7 +45,7 @@
             android:layout_height="50dp"
             android:layout_weight=".4"
             android:gravity="center_horizontal"
-            android:text="@string/blank"
+            android:text="@string/app_blank"
             android:textColor="#ffffffff"
             android:textSize="40sp"
             android:textStyle="bold" />
@@ -55,9 +55,9 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight=".3"
-            android:background="#33cc33"
-            android:text="+"
-            android:textColor="#ffffffff"
+            android:background="@color/edit_score_up"
+            android:text="@string/edit_score_up"
+            android:textColor="@color/app_text"
             android:textSize="40sp" />
     </LinearLayout>
 
