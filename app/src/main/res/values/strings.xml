@@ -5,6 +5,9 @@
 
     <!-- Main Activity -->
     <string name="main_feet">feet</string>
+    <string name="main_location_dialog_title">Enable Location</string>
+    <string name="main_location_dialog_msg">Enable location to show course map.</string>
+    <string name="main_location_dialog_confirm">OK</string>
 
     <!-- EditScore Activity -->
     <string name="edit_score_up">+</string>

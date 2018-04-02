@@ -1,14 +1,20 @@
 package com.syntacticsugar.nolecaddie.ui;
 
+import android.Manifest;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentSender;
+import android.content.pm.PackageManager;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -16,7 +22,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -41,6 +46,8 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         GoogleApiClient.OnConnectionFailedListener {
 
     public static final String TAG = MainActivity.class.getSimpleName();
+
+    public static final int LOCATION_REQUEST_CODE = 103;
     private final static int CONNECTION_FAILURE_RESOLUTION_REQUEST = 9000;
 
     private LatLng currentLocation;
@@ -48,13 +55,8 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
     public static int currentStroke = 1;
     public static int currentHole = 1;
     public static String currentPar;
-    private SupportMapFragment mapFragment;
     private LocationManager locationManager;
-    private Location mCurrentLocation;
-    private Location hCurrentLocation;
-    private Criteria criteria;
-    private String bestProvider;
-    private LatLng currentHoleLatLng;
+    private Location userCurrentLocation;
     double myCurrentLat;
     double myCurrentLng;
     double distanceToHole;
@@ -94,60 +96,10 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
             }
         });
 
-        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
+        // init map fragment
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.main_map);
         mapFragment.getMapAsync(this);
-
-        //        mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.main_map);
-
-//        if (!isGooglePlayServicesAvailable()) {
-//            finish();
-//        }
-//        googleMap = mapFragment.getMap();
-//        googleMap.setMyLocationEnabled(true);
-//        locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
-//        criteria = new Criteria();
-//        bestProvider = locationManager.getBestProvider(criteria, true);
-//
-//        mCurrentLocation = locationManager.getLastKnownLocation(bestProvider);
-
-//
-//        if (mCurrentLocation != null) {
-//            myLocationListener.onLocationChanged(mCurrentLocation);
-//        } else {
-//            Toast.makeText(getApplicationContext(), "No Location Available. Probably turned off.",
-//                    Toast.LENGTH_SHORT).show();
-//            //Intent intent =  new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-//            //startActivity(intent);
-//        }
-
-        //locationManager.requestLocationUpdates(bestProvider,20000,1,myLocationListener);
-    }
-
-    /**
-     * Manipulates the map once available.
-     * This callback is triggered when the map is ready to be used.
-     * This is where we can add markers or lines, add listeners or move the camera. In this case,
-     * we just add a marker near Sydney, Australia.
-     * If Google Play services is not installed on the device, the user will be prompted to install
-     * it inside the SupportMapFragment. This method will only be triggered once the user has
-     * installed Google Play services and returned to the app.
-     */
-    @Override
-    public void onMapReady(GoogleMap googleMap) {
-        this.googleMap = googleMap;
-
-//        // Add a marker in Sydney and move the camera
-//        LatLng sydney = new LatLng(-34, 151);
-//        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-//        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
-
-        // original code snippets from google maps api reference
-        //https://developers.google.com/maps/documentation/android/views#target_location
-        googleMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
-        Log.v("MapReady Hole is: ", " " + currentHole);
-        LatLng Hole = AppConfig.HOLE_LOCATIONS[currentHole - 1];
     }
 
     @Override
@@ -162,7 +114,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         super.onPause();
     }
 
-    public String checkPar(int hole) {
+    private String checkPar(int hole) {
         return Integer.toString(AppConfig.HOLE_PARS[(hole - 1)]);
     }
 
@@ -172,7 +124,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         Toast.makeText(getApplicationContext(), "Throw Marked.", Toast.LENGTH_SHORT).show();
         ++currentStroke;
         strokeTextView.setText(String.valueOf(currentStroke));
-//        locationManager.requestSingleUpdate(criteria,myLocationListener,null);
+        requestLocationUpdate();
     }
 
     private void finishHole() {
@@ -180,9 +132,126 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         startActivity(intent);
     }
 
-    /* fix mess below this point */
+    /**
+     * Manipulates the map once available.
+     * This callback is triggered when the map is ready to be used.
+     * If Google Play services is not installed on the device, the user will be prompted to install
+     * it inside the SupportMapFragment. This method will only be triggered once the user has
+     * installed Google Play services and returned to the app.
+     */
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
 
-    private final LocationListener myLocationListener = new LocationListener() {
+        this.googleMap = googleMap;
+
+        if (!isLocationPermissionGranted()) {
+
+            String title = getString(R.string.main_location_dialog_title);
+            String msg = getString(R.string.main_location_dialog_msg);
+            String confirm = getString(R.string.main_location_dialog_confirm);
+
+            AlertDialog locationDialog = new AlertDialog.Builder(this)
+                    .setTitle(title)
+                    .setMessage(msg)
+                    .setPositiveButton(confirm, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            ActivityCompat.requestPermissions(MainActivity.this,
+                                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                                    LOCATION_REQUEST_CODE);
+                        }
+                    })
+                    .create();
+            locationDialog.show();
+        } else {
+            setupLocationUpdates();
+        }
+
+        googleMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
+        Log.v("MapReady Hole is: ", " " + currentHole);
+        LatLng Hole = AppConfig.HOLE_LOCATIONS[currentHole - 1];
+    }
+
+    private boolean isLocationPermissionGranted() {
+        return ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED;
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {
+
+        if (requestCode != LOCATION_REQUEST_CODE) {
+            return;
+        }
+
+        if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            // permission granted
+            setupLocationUpdates();
+        } else {
+            Log.w(TAG, "Warning: Location Permission Not Granted");
+        }
+    }
+
+    private void setupLocationUpdates() {
+
+        try {
+            googleMap.setMyLocationEnabled(true);
+            locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+
+            String bestProvider = locationManager.getBestProvider(new Criteria(), true);
+            userCurrentLocation = locationManager.getLastKnownLocation(bestProvider);
+
+            if (userCurrentLocation != null) {
+                locationListener.onLocationChanged(userCurrentLocation);
+            }
+
+            // request location updates
+            locationManager.requestLocationUpdates(bestProvider, 20000, 1, locationListener);
+        } catch (SecurityException e) {
+            Log.e(TAG, "ERROR: Location Permission Not Granted", e);
+        }
+    }
+
+    private void requestLocationUpdate() {
+
+        if (locationManager == null) {
+            Log.w(TAG, "failed to request update, invalid location manager");
+            return;
+        }
+
+        try {
+            locationManager.requestSingleUpdate(new Criteria(), locationListener, null);
+        } catch (SecurityException e) {
+            Log.e(TAG, "ERROR: Location Permission Not Granted", e);
+        }
+    }
+
+    @Override
+    public void onConnected(Bundle bundle) {
+        Log.i(TAG, "Location services connected.");
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+        Log.i(TAG, "Location services suspended. Please reconnect.");
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+
+        if (connectionResult.hasResolution()) {
+            try {
+                // Start an Activity that tries to resolve the error
+                connectionResult.startResolutionForResult(this, CONNECTION_FAILURE_RESOLUTION_REQUEST);
+            } catch (IntentSender.SendIntentException e) {
+                e.printStackTrace();
+            }
+        } else {
+            Log.i(TAG, "Location services connection failed with code " + connectionResult.getErrorCode());
+        }
+    }
+
+    private final LocationListener locationListener = new LocationListener() {
         @Override
         public void onLocationChanged(Location location) {
             updateCurrentLocation(location);
@@ -207,11 +276,10 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
     private void updateCurrentLocation(Location location) {
 
         if (location != null) {
-            currentHoleLatLng = AppConfig.HOLE_LOCATIONS[currentHole - 1];
-            myCurrentLat = mCurrentLocation.getLatitude();
-            myCurrentLng = mCurrentLocation.getLongitude();
+            LatLng currentHoleLatLng = AppConfig.HOLE_LOCATIONS[currentHole - 1];
+            myCurrentLat = userCurrentLocation.getLatitude();
+            myCurrentLng = userCurrentLocation.getLongitude();
             currentLocation = new LatLng(myCurrentLat, myCurrentLng);
-
 
     /*   // **** works; no time to make a good graphic so taking out for now
         // Uncomment to see working with FSU graphic
@@ -223,17 +291,16 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
                 .position(golfMapCenter, 396.0f, 324.0f)
                 .transparency(0.8f)); */
 
-
-            hCurrentLocation = new Location("");
-            hCurrentLocation.setLatitude(currentHoleLatLng.latitude);
-            hCurrentLocation.setLongitude(currentHoleLatLng.longitude);
+            Location holeCurrentLocation = new Location("");
+            holeCurrentLocation.setLatitude(currentHoleLatLng.latitude);
+            holeCurrentLocation.setLongitude(currentHoleLatLng.longitude);
 
             CameraPosition cameraPosition = new CameraPosition.Builder()
-                    .target(currentHoleLatLng)      // Sets the center of the map to Mountain View
-                    .zoom(18)                   // Sets the zoom
-                    .bearing(mCurrentLocation.bearingTo(hCurrentLocation))                // Sets the orientation of the camera to east
-                    .tilt(65.0f)                   // Sets the tilt of the camera to 30 degrees
-                    .build();                   // Creates a CameraPosition from the builder
+                    .target(currentHoleLatLng) // Sets the center of the map to Mountain View
+                    .zoom(18) // Sets the zoom
+                    .bearing(userCurrentLocation.bearingTo(holeCurrentLocation)) // Sets the orientation of the camera to east
+                    .tilt(65.0f)  // Sets the tilt of the camera to 30 degrees
+                    .build();
 
             googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
 
@@ -242,13 +309,11 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
                     .title("Hole " + currentHole)
                     .icon(BitmapDescriptorFactory.fromResource(R.drawable.marker_basket)));
 
-            googleMap
-                    .addPolyline((new PolylineOptions())
+            googleMap.addPolyline((new PolylineOptions())
                             .add(currentLocation, currentHoleLatLng).width(5).color(0xFF7A2339)
                             .geodesic(true));
 
             distanceToHole = CalculationByDistance(currentLocation, currentHoleLatLng);
-
             distanceTextView.setText(String.valueOf(distanceToHole));
         } else {
             Toast.makeText(getBaseContext(), "No Location Found", Toast.LENGTH_SHORT).show();
@@ -279,42 +344,6 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
                 + " Meter   " + meterInDec);
 
         return Math.floor(((Radius * c) * 3280.84) * 100) / 100;
-    }
-
-    @Override
-    public void onConnected(Bundle bundle) {
-        Log.i(TAG, "Location services connected.");
-        //locationManager.requestLocationUpdates(bestProvider,20000,1,null);
-    }
-
-    @Override
-    public void onConnectionSuspended(int i) {
-        Log.i(TAG, "Location services suspended. Please reconnect.");
-    }
-
-    @Override
-    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-
-        if (connectionResult.hasResolution()) {
-            try {
-                // Start an Activity that tries to resolve the error
-                connectionResult.startResolutionForResult(this, CONNECTION_FAILURE_RESOLUTION_REQUEST);
-            } catch (IntentSender.SendIntentException e) {
-                e.printStackTrace();
-            }
-        } else {
-            Log.i(TAG, "Location services connection failed with code " + connectionResult.getErrorCode());
-        }
-    }
-
-    private boolean isGooglePlayServicesAvailable() {
-        int status = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
-        if (ConnectionResult.SUCCESS == status) {
-            return true;
-        } else {
-            GooglePlayServicesUtil.getErrorDialog(status, this, 0).show();
-            return false;
-        }
     }
 
 }
