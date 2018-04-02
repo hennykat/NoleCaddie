@@ -174,7 +174,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
 
     private boolean isLocationPermissionGranted() {
         return ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED;
+                == PackageManager.PERMISSION_GRANTED;
     }
 
     @Override
