@@ -35,6 +35,7 @@ import com.google.android.gms.maps.model.PolylineOptions;
 import com.syntacticsugar.nolecaddie.R;
 import com.syntacticsugar.nolecaddie.config.AppConfig;
 import com.syntacticsugar.nolecaddie.model.Hole;
+import com.syntacticsugar.nolecaddie.storage.Storage;
 
 import java.text.DecimalFormat;
 import java.util.List;
@@ -52,17 +53,20 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
     public static final int LOCATION_REQUEST_CODE = 103;
     private final static int CONNECTION_FAILURE_RESOLUTION_REQUEST = 9000;
 
-    private LatLng currentLocation;
+    private Storage storage;
+    private int currentHole;
+    private int currentStroke = 1;
+    // UI
+    private TextView strokeTextView;
+    private TextView distanceTextView;
+    // maps
     private GoogleMap googleMap;
-    public static int currentStroke = 1;
-    public static int currentHole = 1;
-    public static String currentPar;
+    private LatLng currentLocation;
     private LocationManager locationManager;
     private Location userCurrentLocation;
     double myCurrentLat;
     double myCurrentLng;
     double distanceToHole;
-    private TextView strokeTextView, distanceTextView, holeTextView;
 
 /*  // map overlay stuff
     LatLng mapSWCorner = new LatLng(30.190333,-85.724764);
@@ -76,12 +80,18 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        distanceTextView = findViewById(R.id.main_distance_textview);
-        holeTextView = findViewById(R.id.main_hole_textview);
-        strokeTextView = findViewById(R.id.main_stroke_textview);
+        // init global vars
+        this.storage = new Storage(this);
+        this.currentHole = storage.loadCurrentHole();
 
-        holeTextView.setText(String.valueOf(currentHole));
+        // setup ui
+        TextView holeTextView = findViewById(R.id.main_hole_textview);
+        holeTextView.setText(String.valueOf(currentHole + 1));
+
+        strokeTextView = findViewById(R.id.main_stroke_textview);
         strokeTextView.setText(String.valueOf(currentStroke));
+
+        distanceTextView = findViewById(R.id.main_distance_textview);
 
         final Button throwButton = findViewById(R.id.main_throw_button);
         throwButton.setOnClickListener(new View.OnClickListener() {
@@ -90,6 +100,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
                 markStroke();
             }
         });
+
         final Button finishButton = findViewById(R.id.main_finish_button);
         finishButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -104,33 +115,20 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         mapFragment.getMapAsync(this);
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-        currentPar = checkPar(currentHole);
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-    }
-
-    private String checkPar(int hole) {
-        List<Hole> holeList = AppConfig.getHoleList();
-        return Integer.toString(holeList.get(hole - 1).getPar());
-    }
-
     private void markStroke() {
-
-        //display in short period of time
-        Toast.makeText(getApplicationContext(), "Throw Marked.", Toast.LENGTH_SHORT).show();
+        // alert marked
+        Toast.makeText(getApplicationContext(), getString(R.string.main_toast_marked), Toast.LENGTH_SHORT).show();
+        // update stroke
         ++currentStroke;
         strokeTextView.setText(String.valueOf(currentStroke));
+        // update location
         requestLocationUpdate();
     }
 
     private void finishHole() {
+
+        storage.updateScore(currentStroke, currentHole);
+
         Intent intent = new Intent(this, EditScoreActivity.class);
         startActivity(intent);
     }
@@ -173,7 +171,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         googleMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
         Log.v("MapReady Hole is: ", " " + currentHole);
         List<Hole> holeList = AppConfig.getHoleList();
-        LatLng Hole = holeList.get(currentHole - 1).getLatLng();
+        LatLng Hole = holeList.get(currentHole).getLatLng();
     }
 
     private boolean isLocationPermissionGranted() {
@@ -281,7 +279,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
 
         if (location != null) {
             List<Hole> holeList = AppConfig.getHoleList();
-            LatLng currentHoleLatLng = holeList.get(currentHole - 1).getLatLng();
+            LatLng currentHoleLatLng = holeList.get(currentHole).getLatLng();
             myCurrentLat = userCurrentLocation.getLatitude();
             myCurrentLng = userCurrentLocation.getLongitude();
             currentLocation = new LatLng(myCurrentLat, myCurrentLng);
@@ -315,8 +313,8 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
                     .icon(BitmapDescriptorFactory.fromResource(R.drawable.marker_basket)));
 
             googleMap.addPolyline((new PolylineOptions())
-                            .add(currentLocation, currentHoleLatLng).width(5).color(0xFF7A2339)
-                            .geodesic(true));
+                    .add(currentLocation, currentHoleLatLng).width(5).color(0xFF7A2339)
+                    .geodesic(true));
 
             distanceToHole = CalculationByDistance(currentLocation, currentHoleLatLng);
             distanceTextView.setText(String.valueOf(distanceToHole));

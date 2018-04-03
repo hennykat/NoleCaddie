@@ -2,9 +2,11 @@ package com.syntacticsugar.nolecaddie.storage;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.syntacticsugar.nolecaddie.config.AppConfig;
 import com.syntacticsugar.nolecaddie.model.Hole;
 
 import java.lang.reflect.Type;
@@ -40,14 +42,59 @@ public class Storage {
         String scoreListJson = sharedPreferences.getString(SCORE_LIST_KEY, null);
         Type listType = new TypeToken<List<Hole>>() {
         }.getType();
-        return gson.fromJson(scoreListJson, listType);
+
+        List<Hole> scoreList = gson.fromJson(scoreListJson, listType);
+        if (scoreList == null || scoreList.isEmpty()) {
+            Log.w(TAG, "failed to load score list, returning default");
+            return AppConfig.getHoleList();
+        } else {
+            return scoreList;
+        }
     }
 
-    public void saveCurrentHole(List<Hole> scoreList) {
+    public void saveScoreList(List<Hole> scoreList) {
         Gson gson = new Gson();
         String scoreListJson = gson.toJson(scoreList);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(SCORE_LIST_KEY, scoreListJson);
         editor.apply();
+    }
+
+    public void updateScore(int score, int holeNum) {
+
+        List<Hole> scoreList = loadScoreList();
+        if (scoreList == null || scoreList.isEmpty()) {
+            Log.w(TAG, "failed to update score, invalid score list");
+            return;
+        }
+
+        // alter hole
+        Hole current = scoreList.get(holeNum);
+        if (current == null) {
+            Log.w(TAG, "failed to update score, invalid hole");
+            return;
+        }
+
+        current.setScore(score);
+        scoreList.set(holeNum, current);
+        saveScoreList(scoreList);
+    }
+
+    public Integer getScore(int holeNum) {
+
+        List<Hole> scoreList = loadScoreList();
+        if (scoreList == null || scoreList.isEmpty()) {
+            Log.w(TAG, "failed to get score, invalid score list");
+            return null;
+        }
+
+        // alter hole
+        Hole current = scoreList.get(holeNum);
+        if (current != null) {
+            return current.getScore();
+        } else {
+            Log.w(TAG, "failed to get score, invalid hole");
+            return null;
+        }
     }
 }

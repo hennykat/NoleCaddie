@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.syntacticsugar.nolecaddie.R;
+import com.syntacticsugar.nolecaddie.storage.Storage;
 
 /**
  * Created by sam on 7/26/15.
@@ -15,14 +16,25 @@ import com.syntacticsugar.nolecaddie.R;
  */
 public class EditScoreActivity extends AppCompatActivity {
 
+    private Storage storage;
+    private int currentHole;
+    private Integer currentStroke;
+    // UI
     private TextView strokeTextView;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_score);
 
+        // init global vars
+        this.storage = new Storage(this);
+        this.currentHole = storage.loadCurrentHole();
+        this.currentStroke = storage.getScore(currentHole);
+
+        // TODO: what is current stroke is null
+
         strokeTextView = findViewById(R.id.edit_score_stroke_textview);
-        strokeTextView.setText(String.valueOf(MainActivity.currentStroke));
+        strokeTextView.setText(String.valueOf(currentStroke));
 
         final Button upButton = findViewById(R.id.edit_score_up_button);
         upButton.setOnClickListener(new View.OnClickListener() {
@@ -50,16 +62,18 @@ public class EditScoreActivity extends AppCompatActivity {
     }
 
     private void upScore() {
-        ++MainActivity.currentStroke; // TODO: DESTROY this
-        strokeTextView.setText(String.valueOf(MainActivity.currentStroke));
+        ++this.currentStroke;
+        strokeTextView.setText(String.valueOf(currentStroke));
     }
 
     private void downScore() {
-        --MainActivity.currentStroke; // TODO: DESTROY this
-        strokeTextView.setText(String.valueOf(MainActivity.currentStroke));
+        --this.currentStroke;
+        strokeTextView.setText(String.valueOf(currentStroke));
     }
 
     private void finishHole() {
+        storage.updateScore(currentStroke, currentHole);
+
         Intent intent = new Intent(this, ScorecardActivity.class);
         startActivity(intent);
     }

@@ -8,6 +8,7 @@
     <string name="main_location_dialog_title">Enable Location</string>
     <string name="main_location_dialog_msg">Enable location to show course map.</string>
     <string name="main_location_dialog_confirm">OK</string>
+    <string name="main_toast_marked">Throw marked.</string>
 
     <!-- EditScore Activity -->
     <string name="edit_score_up">+</string>
