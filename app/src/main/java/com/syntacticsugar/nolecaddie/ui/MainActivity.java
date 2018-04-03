@@ -34,8 +34,10 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.syntacticsugar.nolecaddie.R;
 import com.syntacticsugar.nolecaddie.config.AppConfig;
+import com.syntacticsugar.nolecaddie.model.Hole;
 
 import java.text.DecimalFormat;
+import java.util.List;
 
 /**
  * Created by Dalton on 7/6/2015.
@@ -115,7 +117,8 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     private String checkPar(int hole) {
-        return Integer.toString(AppConfig.HOLE_PARS[(hole - 1)]);
+        List<Hole> holeList = AppConfig.getHoleList();
+        return Integer.toString(holeList.get(hole - 1).getPar());
     }
 
     private void markStroke() {
@@ -169,7 +172,8 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
 
         googleMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
         Log.v("MapReady Hole is: ", " " + currentHole);
-        LatLng Hole = AppConfig.HOLE_LOCATIONS[currentHole - 1];
+        List<Hole> holeList = AppConfig.getHoleList();
+        LatLng Hole = holeList.get(currentHole - 1).getLatLng();
     }
 
     private boolean isLocationPermissionGranted() {
@@ -276,7 +280,8 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
     private void updateCurrentLocation(Location location) {
 
         if (location != null) {
-            LatLng currentHoleLatLng = AppConfig.HOLE_LOCATIONS[currentHole - 1];
+            List<Hole> holeList = AppConfig.getHoleList();
+            LatLng currentHoleLatLng = holeList.get(currentHole - 1).getLatLng();
             myCurrentLat = userCurrentLocation.getLatitude();
             myCurrentLng = userCurrentLocation.getLongitude();
             currentLocation = new LatLng(myCurrentLat, myCurrentLng);
