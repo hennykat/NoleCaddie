@@ -55,18 +55,14 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
 
     private Storage storage;
     private int currentHole;
-    private int currentStroke = 1;
+    private int currentScore = 1;
     // UI
     private TextView strokeTextView;
     private TextView distanceTextView;
     // maps
     private GoogleMap googleMap;
-    private LatLng currentLocation;
     private LocationManager locationManager;
     private Location userCurrentLocation;
-    double myCurrentLat;
-    double myCurrentLng;
-    double distanceToHole;
 
 /*  // map overlay stuff
     LatLng mapSWCorner = new LatLng(30.190333,-85.724764);
@@ -89,7 +85,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         holeTextView.setText(String.valueOf(currentHole + 1));
 
         strokeTextView = findViewById(R.id.main_stroke_textview);
-        strokeTextView.setText(String.valueOf(currentStroke));
+        strokeTextView.setText(String.valueOf(currentScore));
 
         distanceTextView = findViewById(R.id.main_distance_textview);
 
@@ -119,15 +115,15 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         // alert marked
         Toast.makeText(getApplicationContext(), getString(R.string.main_toast_marked), Toast.LENGTH_SHORT).show();
         // update stroke
-        ++currentStroke;
-        strokeTextView.setText(String.valueOf(currentStroke));
+        ++currentScore;
+        strokeTextView.setText(String.valueOf(currentScore));
         // update location
         requestLocationUpdate();
     }
 
     private void finishHole() {
 
-        storage.updateScore(currentStroke, currentHole);
+        storage.updateScore(currentScore, currentHole);
 
         Intent intent = new Intent(this, EditScoreActivity.class);
         startActivity(intent);
@@ -277,12 +273,16 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
 
     private void updateCurrentLocation(Location location) {
 
-        if (location != null) {
-            List<Hole> holeList = AppConfig.getHoleList();
-            LatLng currentHoleLatLng = holeList.get(currentHole).getLatLng();
-            myCurrentLat = userCurrentLocation.getLatitude();
-            myCurrentLng = userCurrentLocation.getLongitude();
-            currentLocation = new LatLng(myCurrentLat, myCurrentLng);
+        if (location == null) {
+            Toast.makeText(getBaseContext(), "No Location Found", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        List<Hole> holeList = AppConfig.getHoleList();
+        LatLng currentHoleLatLng = holeList.get(currentHole).getLatLng();
+        double myCurrentLat = userCurrentLocation.getLatitude();
+        double myCurrentLng = userCurrentLocation.getLongitude();
+        LatLng currentLocation = new LatLng(myCurrentLat, myCurrentLng);
 
     /*   // **** works; no time to make a good graphic so taking out for now
         // Uncomment to see working with FSU graphic
@@ -294,50 +294,51 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
                 .position(golfMapCenter, 396.0f, 324.0f)
                 .transparency(0.8f)); */
 
-            Location holeCurrentLocation = new Location("");
-            holeCurrentLocation.setLatitude(currentHoleLatLng.latitude);
-            holeCurrentLocation.setLongitude(currentHoleLatLng.longitude);
+        Location holeCurrentLocation = new Location("");
+        holeCurrentLocation.setLatitude(currentHoleLatLng.latitude);
+        holeCurrentLocation.setLongitude(currentHoleLatLng.longitude);
 
-            CameraPosition cameraPosition = new CameraPosition.Builder()
-                    .target(currentHoleLatLng) // Sets the center of the map to Mountain View
-                    .zoom(18) // Sets the zoom
-                    .bearing(userCurrentLocation.bearingTo(holeCurrentLocation)) // Sets the orientation of the camera to east
-                    .tilt(65.0f)  // Sets the tilt of the camera to 30 degrees
-                    .build();
+        CameraPosition cameraPosition = new CameraPosition.Builder()
+                .target(currentHoleLatLng) // Sets the center of the map to Mountain View
+                .zoom(18) // Sets the zoom
+                .bearing(userCurrentLocation.bearingTo(holeCurrentLocation)) // Sets the orientation of the camera to east
+                .tilt(65.0f)  // Sets the tilt of the camera to 30 degrees
+                .build();
 
-            googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+        googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
 
-            googleMap.addMarker(new MarkerOptions()
-                    .position(currentHoleLatLng)
-                    .title("Hole " + currentHole)
-                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.marker_basket)));
+        googleMap.addMarker(new MarkerOptions()
+                .position(currentHoleLatLng)
+                .title("Hole " + currentHole)
+                .icon(BitmapDescriptorFactory.fromResource(R.drawable.marker_basket)));
 
-            googleMap.addPolyline((new PolylineOptions())
-                    .add(currentLocation, currentHoleLatLng).width(5).color(0xFF7A2339)
-                    .geodesic(true));
+        googleMap.addPolyline((new PolylineOptions())
+                .add(currentLocation, currentHoleLatLng).width(5).color(0xFF7A2339)
+                .geodesic(true));
 
-            distanceToHole = CalculationByDistance(currentLocation, currentHoleLatLng);
-            distanceTextView.setText(String.valueOf(distanceToHole));
-        } else {
-            Toast.makeText(getBaseContext(), "No Location Found", Toast.LENGTH_SHORT).show();
-        }
+        double distanceToHole = calculateDistance(currentLocation, currentHoleLatLng);
+        distanceTextView.setText(String.valueOf(distanceToHole));
     }
 
-    //***** taken from http://stackoverflow.com/questions/14394366/find-distance-between-two-points-on-map-using-google-map-api-v2 and modified
-    public double CalculationByDistance(LatLng StartP, LatLng EndP) {
-        int Radius = 6371;// radius of earth in Km
-        double lat1 = StartP.latitude;
-        double lat2 = EndP.latitude;
-        double lon1 = StartP.longitude;
-        double lon2 = EndP.longitude;
-        double dLat = Math.toRadians(lat2 - lat1);
-        double dLon = Math.toRadians(lon2 - lon1);
-        double a = Math.sin(dLat / 2) * Math.sin(dLat / 2)
-                + Math.cos(Math.toRadians(lat1))
-                * Math.cos(Math.toRadians(lat2)) * Math.sin(dLon / 2)
-                * Math.sin(dLon / 2);
+    // http://stackoverflow.com/questions/14394366/find-distance-between-two-points-on-map-using-google-map-api-v2
+    public double calculateDistance(LatLng start, LatLng end) {
+
+        int earthRadiusKm = 6371;
+
+        double startLat = start.latitude;
+        double startLng = start.longitude;
+        double endLat = end.latitude;
+        double endLng = end.longitude;
+
+        double deltaLat = Math.toRadians(endLat - startLat);
+        double deltaLng = Math.toRadians(endLng - startLng);
+
+        double a = Math.sin(deltaLat / 2) * Math.sin(deltaLat / 2)
+                + Math.cos(Math.toRadians(startLat))
+                * Math.cos(Math.toRadians(endLat)) * Math.sin(deltaLng / 2)
+                * Math.sin(deltaLng / 2);
         double c = 2 * Math.asin(Math.sqrt(a));
-        double valueResult = Radius * c;
+        double valueResult = earthRadiusKm * c;
         double km = valueResult / 1;
         DecimalFormat newFormat = new DecimalFormat("#");
         int kmInDec = Integer.valueOf(newFormat.format(km));
@@ -346,7 +347,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         Log.i("Radius Value", "" + valueResult + "   KM  " + kmInDec
                 + " Meter   " + meterInDec);
 
-        return Math.floor(((Radius * c) * 3280.84) * 100) / 100;
+        return Math.floor(((earthRadiusKm * c) * 3280.84) * 100) / 100;
     }
 
 }

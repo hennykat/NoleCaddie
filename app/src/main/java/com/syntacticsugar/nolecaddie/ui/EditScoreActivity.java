@@ -18,7 +18,7 @@ public class EditScoreActivity extends AppCompatActivity {
 
     private Storage storage;
     private int currentHole;
-    private Integer currentStroke;
+    private Integer currentScore;
     // UI
     private TextView strokeTextView;
 
@@ -29,12 +29,12 @@ public class EditScoreActivity extends AppCompatActivity {
         // init global vars
         this.storage = new Storage(this);
         this.currentHole = storage.loadCurrentHole();
-        this.currentStroke = storage.getScore(currentHole);
+        this.currentScore = storage.getScore(currentHole);
 
         // TODO: what is current stroke is null
 
         strokeTextView = findViewById(R.id.edit_score_stroke_textview);
-        strokeTextView.setText(String.valueOf(currentStroke));
+        strokeTextView.setText(String.valueOf(currentScore));
 
         final Button upButton = findViewById(R.id.edit_score_up_button);
         upButton.setOnClickListener(new View.OnClickListener() {
@@ -62,17 +62,17 @@ public class EditScoreActivity extends AppCompatActivity {
     }
 
     private void upScore() {
-        ++this.currentStroke;
-        strokeTextView.setText(String.valueOf(currentStroke));
+        ++this.currentScore;
+        strokeTextView.setText(String.valueOf(currentScore));
     }
 
     private void downScore() {
-        --this.currentStroke;
-        strokeTextView.setText(String.valueOf(currentStroke));
+        --this.currentScore;
+        strokeTextView.setText(String.valueOf(currentScore));
     }
 
     private void finishHole() {
-        storage.updateScore(currentStroke, currentHole);
+        storage.updateScore(currentScore, currentHole);
 
         Intent intent = new Intent(this, ScorecardActivity.class);
         startActivity(intent);
