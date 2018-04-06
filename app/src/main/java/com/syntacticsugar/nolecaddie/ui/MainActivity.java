@@ -36,8 +36,8 @@ import com.syntacticsugar.nolecaddie.R;
 import com.syntacticsugar.nolecaddie.config.AppConfig;
 import com.syntacticsugar.nolecaddie.model.Hole;
 import com.syntacticsugar.nolecaddie.storage.Storage;
+import com.syntacticsugar.nolecaddie.util.AppUtil;
 
-import java.text.DecimalFormat;
 import java.util.List;
 
 /**
@@ -316,38 +316,8 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
                 .add(currentLocation, currentHoleLatLng).width(5).color(0xFF7A2339)
                 .geodesic(true));
 
-        double distanceToHole = calculateDistance(currentLocation, currentHoleLatLng);
+        double distanceToHole = AppUtil.calculateDistance(currentLocation, currentHoleLatLng);
         distanceTextView.setText(String.valueOf(distanceToHole));
-    }
-
-    // http://stackoverflow.com/questions/14394366/find-distance-between-two-points-on-map-using-google-map-api-v2
-    public double calculateDistance(LatLng start, LatLng end) {
-
-        int earthRadiusKm = 6371;
-
-        double startLat = start.latitude;
-        double startLng = start.longitude;
-        double endLat = end.latitude;
-        double endLng = end.longitude;
-
-        double deltaLat = Math.toRadians(endLat - startLat);
-        double deltaLng = Math.toRadians(endLng - startLng);
-
-        double a = Math.sin(deltaLat / 2) * Math.sin(deltaLat / 2)
-                + Math.cos(Math.toRadians(startLat))
-                * Math.cos(Math.toRadians(endLat)) * Math.sin(deltaLng / 2)
-                * Math.sin(deltaLng / 2);
-        double c = 2 * Math.asin(Math.sqrt(a));
-        double valueResult = earthRadiusKm * c;
-        double km = valueResult / 1;
-        DecimalFormat newFormat = new DecimalFormat("#");
-        int kmInDec = Integer.valueOf(newFormat.format(km));
-        double meter = valueResult % 1000;
-        int meterInDec = Integer.valueOf(newFormat.format(meter));
-        Log.i("Radius Value", "" + valueResult + "   KM  " + kmInDec
-                + " Meter   " + meterInDec);
-
-        return Math.floor(((earthRadiusKm * c) * 3280.84) * 100) / 100;
     }
 
 }
