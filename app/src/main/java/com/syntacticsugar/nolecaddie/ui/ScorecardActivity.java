@@ -13,12 +13,7 @@ import com.syntacticsugar.nolecaddie.model.Hole;
 import com.syntacticsugar.nolecaddie.storage.Storage;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-
-import static com.syntacticsugar.nolecaddie.config.AppConfig.FIRST_COLUMN;
-import static com.syntacticsugar.nolecaddie.config.AppConfig.SECOND_COLUMN;
-import static com.syntacticsugar.nolecaddie.config.AppConfig.THIRD_COLUMN;
 
 /**
  * Created by Dalton on 7/10/2015.
@@ -32,8 +27,8 @@ public class ScorecardActivity extends AppCompatActivity {
     private Storage storage;
     private int currentHole;
     // UI
-    public static ArrayList<HashMap<String, String>> list = new ArrayList<>();
-    private ListViewAdapters adapter;
+    private ScorecardAdapter adapter;
+    private List<ScorecardItem> itemList = new ArrayList<>();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -43,6 +38,7 @@ public class ScorecardActivity extends AppCompatActivity {
         // init global vars
         this.storage = new Storage(this);
         this.currentHole = storage.loadCurrentHole();
+        this.adapter = new ScorecardAdapter(this, R.layout.item_scorecard, itemList);
 
         // setup UI
         final Button nextButton = findViewById(R.id.scorecard_next_button);
@@ -61,10 +57,8 @@ public class ScorecardActivity extends AppCompatActivity {
             }
         });
 
-        // TODO: change to a table view
         // fill up listview
         ListView listView = findViewById(R.id.scorecard_score_listview);
-        adapter = new ListViewAdapters(this, list);
         listView.setAdapter(adapter);
     }
 
@@ -77,7 +71,7 @@ public class ScorecardActivity extends AppCompatActivity {
 
     private void updateList() {
 
-        list.clear();
+        itemList.clear();
         adapter.notifyDataSetChanged();
 
         List<Hole> holeList = storage.loadScoreList();
@@ -108,11 +102,8 @@ public class ScorecardActivity extends AppCompatActivity {
             userScore = String.valueOf(score);
         }
 
-        HashMap<String, String> map = new HashMap<>();
-        map.put(FIRST_COLUMN, holeNum);
-        map.put(SECOND_COLUMN, par);
-        map.put(THIRD_COLUMN, userScore);
-        list.add(map);
+        ScorecardItem item = new ScorecardItem(holeNum, par, userScore);
+        itemList.add(item);
     }
 
     private void nextHole() {

@@ -4,21 +4,21 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/hole"
+        android:id="@+id/scorecard_item_hole_textview"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:textStyle="bold" />
 
     <TextView
-        android:id="@+id/par"
+        android:id="@+id/scorecard_item_par_textview"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:textStyle="bold" />
 
     <TextView
-        android:id="@+id/score"
+        android:id="@+id/scorecard_item_score_textview"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
